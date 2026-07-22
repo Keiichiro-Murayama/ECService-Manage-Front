@@ -12,7 +12,18 @@ export default function MenuPage() {
 
   return (
     <div>
-      <span>テスト</span>
+      <span className="text-xl text-primary font-bold border-5 border-rounded border-primary">
+        Primary
+      </span>
+      <span className="text-xl text-secondary font-bold border-5 border-rounded border-secondary bg-tertiary">
+        Secondary
+      </span>
+      <span className="text-xl text-tertiary font-bold border-5 border-rounded border-tertiary">
+        Tertiary
+      </span>
+      <span className="text-xl text-destructive font-bold border-5 border-rounded border-destructive">
+        Destructive
+      </span>
     </div>
   );
 }
