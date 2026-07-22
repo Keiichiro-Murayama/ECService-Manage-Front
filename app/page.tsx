@@ -15,8 +15,8 @@ export default function MenuPage() {
       <span className="text-xl text-primary font-bold border-5 border-rounded border-primary">
         Primary
       </span>
-      <span className="text-xl text-secondary font-bold border-5 border-rounded border-secondary bg-tertiary">
-        Secondary
+      <span className="text-xl text-stone-800 font-bold border-5 border-rounded border-secondary bg-secondary">
+        Secondary(背景色)
       </span>
       <span className="text-xl text-tertiary font-bold border-5 border-rounded border-tertiary">
         Tertiary
