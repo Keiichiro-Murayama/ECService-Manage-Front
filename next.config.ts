@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
          * ※画面（/api/users/register）とのURL衝突を避けるため、
          *   API専用の入り口として「/proxy-api/」を冠しています。
          */
-        source: "/proxy-api/admin/:path*",
+        source: "/proxy-api/:path*",
         destination: "http://20.78.59.178/api/admin/:path*",
       },
     ];
