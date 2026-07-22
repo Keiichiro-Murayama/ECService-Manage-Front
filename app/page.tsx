@@ -11,7 +11,7 @@ export default function MenuPage() {
   `;
 
   return (
-    <div>
+    <div className="flex items-center justify-center gap-8 p-8">
       <span className="text-xl text-primary font-bold border-5 border-rounded border-primary">
         Primary
       </span>
