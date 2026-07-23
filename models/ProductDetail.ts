@@ -12,7 +12,7 @@ export interface ProductDetail {
   /** 商品の在庫数 */
   stock: number;
   /** 商品のカテゴリID */
-  categoryId: string;
+  categoryUuid: string;
   /** 商品の画像URL */
   imageUrl: string;
 }

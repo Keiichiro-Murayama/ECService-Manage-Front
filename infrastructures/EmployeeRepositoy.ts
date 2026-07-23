@@ -1,6 +1,6 @@
 import { IEmployeeRepository } from "../interfaces/IEmployeeRepository";
 import { Employee } from "../models/Employee";
-import { EmployeeAccountRegisterRequest } from "@/models/EmployeeAccountRegisterRequest";
+import { EmployeeAccountRegistration } from "@/models/EmployeeAccountRegistration";
 import { injectable } from "inversify";
 
 @injectable()
@@ -37,7 +37,7 @@ export class EmployeeRepository implements IEmployeeRepository {
    * @param newEmployeeAccount 登録する従業員アカウント情報
    */
   async addEmployeeAccount(
-    newEmployeeAccount: EmployeeAccountRegisterRequest,
+    newEmployeeAccount: EmployeeAccountRegistration,
   ): Promise<void> {
     const response = await fetch(this.employee_account_endpoint, {
       method: "POST",
