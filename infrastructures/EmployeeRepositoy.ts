@@ -18,7 +18,7 @@ export class EmployeeRepository implements IEmployeeRepository {
    *  未登録社員一覧を取得する
    * @returns 未登録社員一覧の配列
    */
-  async getAllEmployees(): Promise<Employee[]> {
+  async getUnregisteredEmployees(): Promise<Employee[]> {
     const response = await fetch(this.employee_endpoint, {
       credentials: "include",
     });
