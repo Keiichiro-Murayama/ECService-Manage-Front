@@ -11,6 +11,7 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { signOut } from "next-auth/react";
+import { PencilRuler } from "lucide-react";
 
 type HeaderProps = {
   showControls?: boolean;
@@ -97,9 +98,8 @@ export default function Header({ showControls = true }: HeaderProps) {
   return (
     <header className="flex items-center justify-between border-b-3 border-b-primary py-4 text-primary">
       <div className="px-4 font-bold">
-        <span className="rounded-md border-3 border-primary px-2 py-1">
-          フルネス文具 管理画面
-        </span>
+        <PencilRuler className="inline-block mr-2" />
+        <span className="px-1 py-1">フルネス文具 管理画面</span>
       </div>
 
       {showControls && (
