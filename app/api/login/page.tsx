@@ -2,7 +2,7 @@
 
 import { LoginForm } from "@/components/auth/LoginForm";
 import { Card } from "@/components/ui/card";
-import { useLogin } from "@/hooks/useLogin";
+import { useLogin } from "@/hooks/auth/useLogin";
 
 /**
  * ログインページ

@@ -10,6 +10,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { signOut } from "next-auth/react";
+
+type HeaderProps = {
+  showControls?: boolean;
+};
 
 const productItems = [
   {
@@ -88,7 +93,7 @@ function MenuGroup({
   );
 }
 
-export default function Header() {
+export default function Header({ showControls = true }: HeaderProps) {
   return (
     <header className="flex items-center justify-between border-b-3 border-b-primary py-4 text-primary">
       <div className="px-4 font-bold">
@@ -97,22 +102,31 @@ export default function Header() {
         </span>
       </div>
 
-      <nav className="px-4">
-        <NavigationMenu viewport={false}>
-          <NavigationMenuList className="gap-1">
-            <MenuGroup label="商品管理" items={productItems} />
-            <MenuGroup label="カテゴリ管理" items={categoryItems} />
-            <MenuGroup label="注文管理" items={orderItems} />
-            <MenuGroup label="アカウント管理" items={accountItems} />
-          </NavigationMenuList>
-        </NavigationMenu>
-      </nav>
+      {showControls && (
+        <nav className="px-4">
+          <NavigationMenu viewport={false}>
+            <NavigationMenuList className="gap-1">
+              <MenuGroup label="商品管理" items={productItems} />
+              <MenuGroup label="カテゴリ管理" items={categoryItems} />
+              <MenuGroup label="注文管理" items={orderItems} />
+              <MenuGroup label="アカウント管理" items={accountItems} />
+            </NavigationMenuList>
+          </NavigationMenu>
+        </nav>
+      )}
 
-      <div className="px-4 font-bold">
-        <button className="text-tertiary-foreground rounded-md bg-tertiary px-2 py-1">
-          ログアウト
-        </button>
-      </div>
+      {showControls && (
+        <div className="px-4 font-bold">
+          <button
+            className="text-secondary-foreground rounded-md bg-secondary px-2 py-1 hover:bg-secondary/80 hover:text-secondary-foreground/80"
+            onClick={() => {
+              signOut({ callbackUrl: "/api/login" });
+            }}
+          >
+            ログアウト
+          </button>
+        </div>
+      )}
     </header>
   );
 }
