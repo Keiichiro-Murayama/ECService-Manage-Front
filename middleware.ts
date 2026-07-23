@@ -15,4 +15,6 @@ export default withAuth({
 });
 export const config = {
   //   matcher: ["/((?!api/login|_next/static|_next/image|favicon.ico).*)"], // ミドルウェアを適用するパスを指定
+  //今は開発中なのですべてのパスへの非ログインアクセスを許可
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"], // ミドルウェアを適用するパスを指定
 };
