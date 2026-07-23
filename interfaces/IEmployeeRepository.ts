@@ -1,4 +1,4 @@
-import { EmployeeAccountRegisterRequest } from "@/models/EmployeeAccountRegisterRequest";
+import { EmployeeAccountRegistration } from "@/models/EmployeeAccountRegistration";
 import type { Employee } from "../models/Employee";
 
 export interface IEmployeeRepository {
@@ -6,6 +6,6 @@ export interface IEmployeeRepository {
   getUnregisteredEmployees(): Promise<Employee[]>;
   /** 従業員アカウントを登録する */
   addEmployeeAccount(
-    newEmployeeAccount: EmployeeAccountRegisterRequest,
+    newEmployeeAccount: EmployeeAccountRegistration,
   ): Promise<void>;
 }

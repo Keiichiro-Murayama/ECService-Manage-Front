@@ -2,7 +2,7 @@ import { IEmployeeRepository } from "../interfaces/IEmployeeRepository";
 import { Employee } from "../models/Employee";
 import { EmployeeAccountRegistration } from "@/models/EmployeeAccountRegistration";
 import { injectable } from "inversify";
-
+type UnregisteredEmployeesResponse = { employees: Employee[]; };
 @injectable()
 export class EmployeeRepository implements IEmployeeRepository {
   /**
@@ -18,6 +18,7 @@ export class EmployeeRepository implements IEmployeeRepository {
    *  未登録社員一覧を取得する
    * @returns 未登録社員一覧の配列
    */
+
   async getUnregisteredEmployees(): Promise<Employee[]> {
     const response = await fetch(this.employee_endpoint, {
       credentials: "include",
@@ -28,8 +29,8 @@ export class EmployeeRepository implements IEmployeeRepository {
         `未登録社員一覧の取得に失敗しました。(status : ${response.status})`,
       );
     }
-    const data: Employee[] = await response.json();
-    return data;
+    const data: UnregisteredEmployeesResponse = await response.json();
+    return data.employees;
   }
 
   /**
@@ -47,7 +48,10 @@ export class EmployeeRepository implements IEmployeeRepository {
       body: JSON.stringify(newEmployeeAccount),
       credentials: "include",
     });
-
+    if (response.status === 409) {
+      const errorData: { message: string } = await response.json();
+      throw new Error(errorData.message);
+    }
     if (!response.ok) {
       throw new Error(
         `従業員アカウントの登録に失敗しました。(status : ${response.status})`,

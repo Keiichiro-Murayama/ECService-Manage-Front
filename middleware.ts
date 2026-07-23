@@ -1,3 +1,6 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import type { NextFetchEvent } from "next/server";
 import { withAuth } from "next-auth/middleware";
 /**
  * ミドルウェアを実装する
@@ -8,11 +11,21 @@ import { withAuth } from "next-auth/middleware";
  * 今回は、ログイン画面以外のすべてのパスにミドルウェアを適用する
  */
 // ミドルウェアの処理と、未ログイン時のリダイレクト先を指定
-export default withAuth({
+const authMiddleware = withAuth({
   pages: {
     signIn: "/api/login", // ログイン画面のパスを指定
   },
 });
+
+export default function middleware(req: NextRequest, event: NextFetchEvent) {
+  // 開発中は認証チェックをスキップする
+  if (process.env.NODE_ENV === "development") {
+    return NextResponse.next();
+  }
+
+  return authMiddleware(req as any, event);
+}
+
 export const config = {
-  matcher: ["/((?!api/login|_next/static|_next/image|favicon.ico).*)"], // ミドルウェアを適用するパスを指定
+  matcher: ["/((?!api/login|api/auth|_next/static|_next/image|favicon.ico).*)"], // ミドルウェアを適用するパスを指定
 };
