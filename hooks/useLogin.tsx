@@ -35,7 +35,7 @@ export function useLogin() {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/proxy-api/admin/login", {
+      const res = await fetch("/proxy-api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

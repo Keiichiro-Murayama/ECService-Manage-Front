@@ -2,7 +2,6 @@
 
 import { LoginForm } from "@/components/auth/LoginForm";
 import { Card } from "@/components/ui/card";
-import { Library } from "lucide-react";
 import { useLogin } from "@/hooks/useLogin";
 
 /**
@@ -12,18 +11,15 @@ export default function LoginPage() {
   const login = useLogin();
 
   return (
-    <div className="mx-auto max-w-md py-8">
-      {/* タイトル */}
-      <div className="mb-6 flex flex-col items-center gap-2">
-        <Library className="h-10 w-10 text-slate-700" />
-        <h1 className="text-2xl font-bold tracking-tight">ログイン</h1>
-        <p className="text-sm text-muted-foreground">
-          管理者システムにログインしてください。
-        </p>
-      </div>
-
+    <div className="mx-auto max-w-md items-center justify-center py-30">
       {/* ログインフォームをカードで囲む */}
       <Card className="p-6">
+        <div className="space-y-1.5 py-4 text-center">
+          <h1 className="text-2xl font-bold">ログイン</h1>
+          <span className="text-sm text-center text-muted-foreground">
+            管理者システムにログインします。
+          </span>
+        </div>
         <LoginForm
           username={login.username}
           password={login.password}
