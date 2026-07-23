@@ -120,7 +120,7 @@ export default function Header({ showControls = true }: HeaderProps) {
           <button
             className="text-secondary-foreground rounded-md bg-secondary px-2 py-1 hover:bg-secondary/80 hover:text-secondary-foreground/80"
             onClick={() => {
-              signOut({ callbackUrl: "/api/login" });
+              signOut({ callbackUrl: "/admin/login" });
             }}
           >
             ログアウト
