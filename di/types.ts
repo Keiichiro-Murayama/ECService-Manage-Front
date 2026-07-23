@@ -10,4 +10,5 @@ export const TYPES = {
   // サービス層
   IRegisterEmployeeAccountService: Symbol.for("IRegisterEmployeeAccountService",),
   ISearchProductsService: Symbol.for("ISearchProductsService"),
+  IRegisterCategoryService: Symbol.for("IRegisterCategoryService")
 } as const;
