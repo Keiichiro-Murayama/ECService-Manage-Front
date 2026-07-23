@@ -16,9 +16,8 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (searchParams.get("loggedOut") === "1") {
-      toast.success("ログアウトしました。", { duration: 5000 });
-      // クエリを除去し、再表示時にトーストが重複しないようにする
-      // router.replace("/admin/login");
+      toast.success("ログアウトしました。", { duration: 2000 });
+      router.replace("/admin/login");
     }
   }, [router, searchParams]);
 
