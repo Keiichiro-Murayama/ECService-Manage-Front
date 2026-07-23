@@ -97,7 +97,10 @@ function MenuGroup({
 export default function Header({ showControls = true }: HeaderProps) {
   return (
     <header className="flex items-center justify-between border-b-3 border-b-primary py-4 text-primary">
-      <div className="px-4 font-bold">
+      <div
+        className="px-4 font-bold"
+        onClick={() => (window.location.href = "/")}
+      >
         <PencilRuler className="inline-block mr-2" />
         <span className="px-1 py-1">フルネス文具 管理画面</span>
       </div>
