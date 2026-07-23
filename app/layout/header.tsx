@@ -10,8 +10,8 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { signOut } from "next-auth/react";
 import { PencilRuler } from "lucide-react";
+import { useLogout } from "@/hooks/auth/useLogout";
 
 type HeaderProps = {
   showControls?: boolean;
@@ -95,6 +95,8 @@ function MenuGroup({
 }
 
 export default function Header({ showControls = true }: HeaderProps) {
+  const { logout } = useLogout();
+
   return (
     <header className="flex items-center justify-between border-b-3 border-b-primary py-4 text-primary">
       <div
@@ -122,9 +124,7 @@ export default function Header({ showControls = true }: HeaderProps) {
         <div className="px-4 font-bold">
           <button
             className="text-secondary-foreground rounded-md bg-secondary px-2 py-1 hover:bg-secondary/80 hover:text-secondary-foreground/80"
-            onClick={() => {
-              signOut({ callbackUrl: "/admin/login" });
-            }}
+            onClick={logout}
           >
             ログアウト
           </button>

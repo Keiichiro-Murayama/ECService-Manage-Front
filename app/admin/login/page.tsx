@@ -1,5 +1,7 @@
 "use client";
-
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 import { LoginForm } from "@/components/auth/LoginForm";
 import { Card } from "@/components/ui/card";
 import { useLogin } from "@/hooks/auth/useLogin";
@@ -9,6 +11,16 @@ import { useLogin } from "@/hooks/auth/useLogin";
  */
 export default function LoginPage() {
   const login = useLogin();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("loggedOut") === "1") {
+      toast.success("ログアウトしました。", { duration: 5000 });
+      // クエリを除去し、再表示時にトーストが重複しないようにする
+      // router.replace("/admin/login");
+    }
+  }, [router, searchParams]);
 
   return (
     <div className="mx-auto max-w-md items-center justify-center py-30">

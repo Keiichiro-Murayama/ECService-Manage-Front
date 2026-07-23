@@ -13,7 +13,7 @@ import { withAuth } from "next-auth/middleware";
 // ミドルウェアの処理と、未ログイン時のリダイレクト先を指定
 const authMiddleware = withAuth({
   pages: {
-    signIn: "/api/login", // ログイン画面のパスを指定
+    signIn: "/admin/login", // ログイン画面のパスを指定
   },
 });
 
@@ -27,5 +27,7 @@ export default function middleware(req: NextRequest, event: NextFetchEvent) {
 }
 
 export const config = {
-  matcher: ["/((?!api/login|api/auth|_next/static|_next/image|favicon.ico).*)"], // ミドルウェアを適用するパスを指定
+  matcher: [
+    "/((?!admin/login|api/auth|_next/static|_next/image|favicon.ico).*)",
+  ], // ミドルウェアを適用するパスを指定
 };

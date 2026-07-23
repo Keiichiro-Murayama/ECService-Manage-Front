@@ -17,8 +17,11 @@ export function useLogout() {
    */
   const logout = async () => {
     try {
+      // 1. Auth.jsのサインアウト処理（C# API連携含む）の完了を待つ
       await signOut({ redirect: false });
-      router.push("/api/login");
+
+      // 2. ログアウト完了フラグをクエリで渡してログイン画面へ遷移する
+      router.push("/admin/login?loggedOut=1");
     } catch (error) {
       console.error("ログアウトに失敗しました:", error);
       toast.error("ログアウトに失敗しました。");

@@ -58,8 +58,6 @@ export function useLogin() {
         setError("ログイン状態の確立に失敗しました。");
         return;
       }
-
-      toast.success("ログインしました。");
       router.push("/");
     } catch (e) {
       console.error("ログインエラー:", e);
