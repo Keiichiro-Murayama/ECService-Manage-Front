@@ -3,7 +3,7 @@
  * 社員アカウント登録APIのリクエストに対応するデータ構造を定義します。
  */
 
-export interface EmployeeAccountRegisterRequest {
+export interface EmployeeAccountRegistration{
   /** 社員UUID */
   employeeUuid: string;
   /** アカウント名 */
