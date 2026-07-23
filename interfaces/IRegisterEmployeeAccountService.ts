@@ -1,4 +1,5 @@
 import { EmployeeAccountRegistration } from "../models/EmployeeAccountRegistration";
+import { Employee} from "../models/Employee";
 
 /**
  * アカウント登録サービスを実装してDIコンテナに登録する
@@ -6,7 +7,7 @@ import { EmployeeAccountRegistration } from "../models/EmployeeAccountRegistrati
  */
 export interface IRegisterEmployeeAccountService {
 
-    getUnregisteredEmployees(): Promise<UnregisteredEmployee[]>;
+    getUnregisteredEmployees(): Promise<Employee[]>;
     /**
      * 入力終了時: アカウント名の重複を検証する
      * @param name 入力されたアカウント名
@@ -19,5 +20,5 @@ export interface IRegisterEmployeeAccountService {
      * @param product 登録するアカウントデータ
      * @return 登録されたアカウント（非同期）
      */
-    execute(employeeAccount: EmployeeAccountRegistration): Promise<EmployeeAccountRegistration>;
+    registerEmployeeAccount(employeeAccount: EmployeeAccountRegistration): Promise<void>;
 }
