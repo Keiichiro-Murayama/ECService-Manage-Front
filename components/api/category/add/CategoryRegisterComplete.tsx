@@ -7,6 +7,7 @@ type Props = {
     onClose: () => void;
     onRegisterMore: () => void;
 };
+
 export const CategoryRegisterComplete = ({
     categoryName,
     onClose,
@@ -19,23 +20,30 @@ export const CategoryRegisterComplete = ({
             </h1>
 
             <p className="mb-8">
-                以下のカテゴリを登録しました。</p>
+                以下のカテゴリを登録しました。
+            </p>
 
-      <div className="mb-8 grid grid-cols-[140px_1fr] gap-x-6 gap-y-3 text-xl">
-                    <p className="text-right">カテゴリ名</p>
-                    <p>{categoryName}</p>
-                </div>
+            <div className="mb-8 grid grid-cols-[140px_1fr] gap-x-6 gap-y-3 text-xl">
+                <p className="text-right">カテゴリ名</p>
+                <p>{categoryName}</p>
+            </div>
+
+            <div className="flex gap-3">
+                <Button
+                    className="w-48"
+                    variant="outline"
+                    onClick={onRegisterMore}
+                >
+                    さらにカテゴリを登録
+                </Button>
 
                 <Button
-        variant="outline"
-        onClick={onRegisterMore}
-    >
-        さらにカテゴリを登録
-    </Button>
-    
-            <Button onClick={onClose}>
-                ホームへ戻る
-            </Button>
+                    className="w-48"
+                    onClick={onClose}
+                >
+                    ホームへ戻る
+                </Button>
+            </div>
         </div>
     );
 };
