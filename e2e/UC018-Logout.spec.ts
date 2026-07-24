@@ -9,7 +9,12 @@ test.describe("ログアウト", () => {
       page.getByRole("heading", { name: "メニューページ" }),
     ).toBeVisible();
     await page.getByRole("button", { name: "ログアウト" }).click();
-    await expect(page.getByText("ログアウトしました。")).toBeVisible();
+
+    await expect(page).toHaveURL(/\/admin\/login(\?loggedOut=1)?$/);
     await expect(page.getByRole("heading", { name: "ログイン" })).toBeVisible();
+
+    await expect(
+      page.getByText("ログアウトしました。", { exact: true }),
+    ).toBeVisible();
   });
 });
