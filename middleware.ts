@@ -1,7 +1,6 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import type { NextFetchEvent } from "next/server";
+import { NextResponse, type NextFetchEvent } from "next/server";
 import { withAuth } from "next-auth/middleware";
+import type { NextRequestWithAuth } from "next-auth/middleware";
 /**
  * ミドルウェアを実装する
  * ここでは、ログインしていない場合にログイン画面へリダイレクトする処理を行う
@@ -17,13 +16,13 @@ const authMiddleware = withAuth({
   },
 });
 
-export default function middleware(req: NextRequest, event: NextFetchEvent) {
+export default function middleware(req: NextRequestWithAuth, event: NextFetchEvent) {
   // 開発中は認証チェックをスキップする
   if (process.env.NODE_ENV === "development") {
     return NextResponse.next();
   }
 
-  return authMiddleware(req as any, event);
+  return authMiddleware(req, event);
 }
 
 export const config = {

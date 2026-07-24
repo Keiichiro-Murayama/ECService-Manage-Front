@@ -51,7 +51,7 @@ export const authOptions: NextAuthOptions = {
     //  封筒(token)の中身を使えるように公開(session)する
     async session({ session, token }) {
       // トークンの全内容をセッションのuserプロパティに詰め替える
-      session.user = token as any;
+      session.user = token as typeof session.user;//不要なany修正
       return session;
     },
   },

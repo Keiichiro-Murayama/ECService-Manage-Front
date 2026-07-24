@@ -45,7 +45,7 @@ export const useRegisterEmployeeAccount = () => {
                 console.log("配列？", Array.isArray(data));
 
                 setEmployees(data);
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.error(error);
 
                 setErrors((prev) => ({
@@ -56,7 +56,7 @@ export const useRegisterEmployeeAccount = () => {
         };
 
         fetchUnregisteredEmployees();
-    }, []);
+    }, [service]);
 
     // --- 入力の変更イベント ---
     const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -89,17 +89,6 @@ export const useRegisterEmployeeAccount = () => {
     },
         []
     );
-    const handleConfirm = useCallback(() => {
-        if (!validateForm()) {
-            return;
-        }
-
-        setStep("confirm");
-    }, [formData]);
-    const handleBack = useCallback(() => {
-        setStep("input");
-        setErrors({});
-    }, []);
     const validateForm = (): boolean => {
         const newErrors: { [key: string]: string } = {};
 
@@ -146,6 +135,18 @@ export const useRegisterEmployeeAccount = () => {
 
         return Object.keys(newErrors).length === 0;
     };
+
+    const handleConfirm = useCallback(() => {
+        if (!validateForm()) {
+            return;
+        }
+
+        setStep("confirm");
+    }, [formData]);
+    const handleBack = useCallback(() => {
+        setStep("input");
+        setErrors({});
+    }, []);
 
     // --- [登録]ボタンクリック時にデータを永続化する ---
     const handleSubmit = useCallback(async (): Promise<void> => {
