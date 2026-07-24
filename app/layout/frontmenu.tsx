@@ -1,6 +1,7 @@
 "use client";
 import "@/app/globals.css";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Header from "./header";
 import Footer from "./footer";
 
@@ -10,10 +11,11 @@ export default function FrontMenuLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { status } = useSession();
 
   const isLoginPage = pathname === "/admin/login";
-  const showHeaderControls = status === "authenticated" && !isLoginPage;
-  // const showHeaderControls = true; // 開発中は常にヘッダーのコントロールを表示する
+  // const showHeaderControls = status === "authenticated" && !isLoginPage;
+  const showHeaderControls = true; // 開発中は常にヘッダーのコントロールを表示する
 
   return (
     <>
