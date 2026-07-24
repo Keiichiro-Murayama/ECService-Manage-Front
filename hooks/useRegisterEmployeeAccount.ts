@@ -22,6 +22,7 @@ export const useRegisterEmployeeAccount = () => {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [step, setStep] = useState<"input" | "confirm" | "complete">("input");
 
     // 入力フォームと状態を初期化して、入力画面に戻る処理
     const resetForm = useCallback(() => {
@@ -88,8 +89,17 @@ export const useRegisterEmployeeAccount = () => {
     },
         []
     );
+    const handleConfirm = useCallback(() => {
+        if (!validateForm()) {
+            return;
+        }
 
-
+        setStep("confirm");
+    }, [formData]);
+    const handleBack = useCallback(() => {
+        setStep("input");
+        setErrors({});
+    }, []);
     const validateForm = (): boolean => {
         const newErrors: { [key: string]: string } = {};
 
@@ -109,6 +119,9 @@ export const useRegisterEmployeeAccount = () => {
         } else if (!/^[a-zA-Z0-9]+$/.test(accountName)) {
             newErrors.accountName =
                 "アカウント名は半角英数字で入力してください";
+        } else if (/^(.)\1+$/.test(accountName)) {
+            newErrors.accountName =
+                "アカウント名は同じ文字だけでは登録できません。";
         }
 
         const password = formData.password.trim();
@@ -124,6 +137,9 @@ export const useRegisterEmployeeAccount = () => {
         } else if (!/^[a-zA-Z0-9]+$/.test(password)) {
             newErrors.password =
                 "パスワードは半角英数字で入力してください。";
+        } else if (/^(.)\1+$/.test(password)) {
+            newErrors.password =
+                "パスワードは同じ文字だけでは登録できません。";
         }
 
         setErrors(newErrors);
@@ -147,7 +163,7 @@ export const useRegisterEmployeeAccount = () => {
                     password: formData.password.trim(),
                 });
 
-                setIsSuccess(true);
+                setStep("complete");
             } catch (error: unknown) {
                 const message =
                     error instanceof Error
@@ -170,9 +186,12 @@ export const useRegisterEmployeeAccount = () => {
         errors,
         isLoading,
         isSuccess,
+        step,
         handleChange,
         handleEmployeeChange,
         handleSubmit,
+        handleBack,
+        handleConfirm,
         resetForm
     };
 };

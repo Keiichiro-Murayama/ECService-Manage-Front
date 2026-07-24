@@ -49,7 +49,7 @@ const orderItems = [
 const accountItems = [
   {
     title: "アカウント登録",
-    href: "/admin/employees/registerAccount",
+    href: "/admin/account/form",
   },
 ];
 
