@@ -96,41 +96,45 @@ export const useRegisterCategory = () => {
     /**
      * カテゴリ登録
      */
-/**
- * カテゴリ登録
- */
-const handleSubmit = useCallback(async (): Promise<void> => {
-    setIsLoading(true);
+    /**
+     * カテゴリ登録
+     */
+    const handleSubmit = useCallback(async (): Promise<void> => {
+        setIsLoading(true);
 
-    try {
-        await service.execute(formData);
+        try {
+            await service.execute(formData);
 
-        setIsSuccess(true);
+            setIsSuccess(true);
 
-        setStep("complete");
-    } catch (error: any) {
-        setErrors((prev) => ({
-            ...prev,
-            submit: error.message,
-        }));
+            setStep("complete");
+        } catch (error: unknown) {
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "カテゴリ登録に失敗しました。";
 
-        // 入力値はそのままで入力画面へ戻る
-        setStep("input");
-    } finally {
-        setIsLoading(false);
-    }
-}, [formData, service]);
+            setErrors((prev) => ({
+                ...prev,
+                submit: message,
+            }));
+
+            setStep("input");
+        } finally {
+            setIsLoading(false);
+        }
+    }, [formData, service]);
 
     const handleRegisterMore = () => {
-    setFormData({
-         categoryUuid: "",
-        name: "",
-    });
+        setFormData({
+            categoryUuid: "",
+            name: "",
+        });
 
-    setErrors({});
+        setErrors({});
 
-    setStep("input");
-};
+        setStep("input");
+    };
 
     return {
         formData,

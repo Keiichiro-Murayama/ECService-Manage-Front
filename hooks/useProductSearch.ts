@@ -200,7 +200,13 @@ export const useProductSearch = () => {
      * 商品検索画面の初回表示時にデータを取得する
      */
     useEffect(() => {
-        void initialize();
+        const animationFrameId = window.requestAnimationFrame(() => {
+            void initialize();
+        });
+
+        return () => {
+            window.cancelAnimationFrame(animationFrameId);
+        };
     }, [initialize]);
 
     return {
