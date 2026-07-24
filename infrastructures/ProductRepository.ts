@@ -19,11 +19,18 @@ export class ProductRepository implements IProductRepository {
    *                     クエリパラメータとして使用されます。
    * @returns 商品の配列
    */
-  async searchProducts(categoryUuid?: string): Promise<Product[]> {
+  async searchProducts(
+    categoryUuid?: string,
+  ): Promise<Product[]> {
     const url = categoryUuid
-      ? `${this.endpoint}?categoryUuid=${encodeURIComponent(categoryUuid)}`
+      ? `${this.endpoint}?categoryUuid=${encodeURIComponent(
+        categoryUuid,
+      )}`
       : this.endpoint;
-    const response = await fetch(url, { credentials: "include" });
+
+    const response = await fetch(url, {
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error(
@@ -31,8 +38,17 @@ export class ProductRepository implements IProductRepository {
       );
     }
 
-    const data: Product[] = await response.json();
-    return data;
+    const data: unknown = await response.json();
+
+    if (!Array.isArray(data)) {
+      console.error("商品検索APIのレスポンス:", data);
+
+      throw new Error(
+        "商品検索APIのレスポンス形式が不正です。",
+      );
+    }
+
+    return data as Product[];
   }
 
   /**
