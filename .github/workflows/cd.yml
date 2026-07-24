@@ -1,0 +1,127 @@
+name: Frontend CD
+
+on:
+  workflow_run:
+    workflows:
+      - "CI frontend"
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Azure VMへデプロイ
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+                - name: VMのデプロイ先を準備
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.ECSERVICE_AZURE_HOST }}
+          username: ${{ secrets.ECSERVICE_AZURE_USER }}
+          key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
+          script: |
+            set -e
+
+            echo "=== Preparing frontend directory ==="
+
+            sudo mkdir -p /var/www/ecservice-manage-front
+            sudo chown -R "$(whoami)":"$(whoami)" /var/www/ecservice-manage-front
+
+            echo "=== Removing old frontend files ==="
+
+            rm -rf /var/www/ecservice-manage-front/*
+
+      - name: フロントエンドのソースをVMへ転送
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.ECSERVICE_AZURE_HOST }}
+          username: ${{ secrets.ECSERVICE_AZURE_USER }}
+          key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
+          source: |
+            app
+            components
+            di
+            hooks
+            infrastructures
+            interfaces
+            lib
+            models
+            public
+            services
+            middleware.ts
+            next.config.ts
+            next-env.d.ts
+            package.json
+            package-lock.json
+            postcss.config.mjs
+            tsconfig.json
+          target: "/var/www/ecservice-manage-front"
+          overwrite: true
+
+      - name: Next.jsをビルドして起動
+        uses: appleboy/ssh-action@v1
+        env:
+          SERVICE_USER: ${{ secrets.ECSERVICE_AZURE_USER }}
+        with:
+          host: ${{ secrets.ECSERVICE_AZURE_HOST }}
+          username: ${{ secrets.ECSERVICE_AZURE_USER }}
+          key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
+          envs: SERVICE_USER
+          script: |
+            set -e
+
+            echo "=== Installing packages ==="
+
+            cd /var/www/ecservice-manage-front
+            npm ci
+
+            echo "=== Building Next.js ==="
+
+            npm run build
+
+            echo "=== Configuring systemd ==="
+
+            sudo tee /etc/systemd/system/ecservice-manage-front.service > /dev/null <<EOF
+            [Unit]
+            Description=ECService Manage Front
+            After=network.target
+
+            [Service]
+            Type=simple
+            User=${SERVICE_USER}
+            WorkingDirectory=/var/www/ecservice-manage-front
+            ExecStart=/usr/bin/npm start
+            Restart=always
+            RestartSec=5
+            Environment=NODE_ENV=production
+            Environment=PORT=3000
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF
+
+            echo "=== Restarting frontend service ==="
+
+            sudo systemctl daemon-reload
+            sudo systemctl enable ecservice-manage-front.service
+            sudo systemctl restart ecservice-manage-front.service
+
+            echo "=== Frontend service status ==="
+
+            sudo systemctl --no-pager --full status ecservice-manage-front.service
+
+            echo "=== Local frontend check ==="
+
+            sleep 5
+            curl --fail --show-error http://127.0.0.1:3000/
+
+            echo "=== Frontend deployment completed ==="
