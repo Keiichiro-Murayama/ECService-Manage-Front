@@ -60,23 +60,36 @@ export class ProductRepository implements IProductRepository {
   }
 
   /**
-   * 商品詳細を取得する
-   * @param productUuid　商品Uuid：クエリパラメータとして使用されます。
-   * @returns 商品詳細
-   */
-  async getProductDetail(productUuid: string): Promise<ProductDetail> {
-    const url = `${this.endpoint}/${encodeURIComponent(productUuid)}`;
-    const response = await fetch(url, { credentials: "include" });
+ * 商品詳細を取得する
+ *
+ * @param productUuid 商品UUID
+ * @returns 商品詳細
+ */
+async getProductDetail(
+  productUuid: string,
+): Promise<ProductDetail> {
+  const url =
+    `${this.endpoint}/info?productUuid=${encodeURIComponent(
+      productUuid,
+    )}`;
 
-    if (!response.ok) {
-      throw new Error(
-        `商品の詳細取得に失敗しました。(status : ${response.status})`,
-      );
-    }
+  const response = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
 
-    const data: ProductDetail = await response.json();
-    return data;
+  if (!response.ok) {
+    await this.throwApiError(
+      response,
+      `商品の詳細取得に失敗しました。(status : ${response.status})`,
+    );
   }
+
+  const data =
+    (await response.json()) as ProductDetail;
+
+  return data;
+}
 
   /**
    * 新しい商品を追加する
