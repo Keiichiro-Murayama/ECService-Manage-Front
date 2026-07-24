@@ -60,9 +60,11 @@ export class CategoryRepository implements ICategoryRepository {
     });
 
     if (!response.ok) {
+      console.log(response.body)
       throw new Error(
         `カテゴリの登録に失敗しました。(status : ${response.status})`,
       );
+      
     }
   }
 }
