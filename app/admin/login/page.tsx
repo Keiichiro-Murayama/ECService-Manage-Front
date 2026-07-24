@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { LoginForm } from "@/components/auth/LoginForm";
@@ -9,7 +9,7 @@ import { useLogin } from "@/hooks/auth/useLogin";
 /**
  * ログインページ
  */
-export default function LoginPage() {
+function LoginPageContent() {
   const login = useLogin();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -47,5 +47,13 @@ export default function LoginPage() {
         />
       </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginPageContent />
+    </Suspense>
   );
 }
