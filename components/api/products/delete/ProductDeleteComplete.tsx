@@ -173,7 +173,7 @@ export const ProductDeleteComplete = () => {
               type="button"
               variant="outline"
               onClick={() => {
-                navigateTo("/admin");
+                navigateTo("/");
               }}
             >
               <House />
