@@ -37,8 +37,11 @@ export function LoginForm({
     <div className="space-y-5">
       {/* ユーザー名 */}
       <div className="space-y-1.5">
-        <label className="text-sm font-medium">ユーザー名</label>
+        <label className="text-sm font-medium" htmlFor="username">
+          ユーザー名
+        </label>
         <Input
+          id="username"
           value={username}
           onChange={(e) => onUsernameChange(e.target.value)}
           onKeyDown={(e) => {
@@ -49,8 +52,11 @@ export function LoginForm({
       </div>
       {/* パスワード */}
       <div className="space-y-1.5">
-        <label className="text-sm font-medium">パスワード</label>
+        <label className="text-sm font-medium" htmlFor="password">
+          パスワード
+        </label>
         <Input
+          id="password"
           type="password"
           value={password}
           onChange={(e) => onPasswordChange(e.target.value)}
