@@ -43,7 +43,7 @@ container.bind<ICategoryRepository>(TYPES.ICategoryRepository).to(CategoryReposi
 // サービス(ユースケース)の登録
 container.bind<IRegisterEmployeeAccountService>(TYPES.IRegisterEmployeeAccountService).to(RegisterEmployeeAccountService);
 container.bind<ISearchProductsService>(TYPES.ISearchProductsService).to(SearchProductsService);
-container.bind<IRegisterCategoryService>(TYPES.IRegisterEmployeeAccountService).to(RegisterCategoryService);
+container.bind<IRegisterCategoryService>(TYPES.IRegisterCategoryService).to(RegisterCategoryService);
 
 
 
