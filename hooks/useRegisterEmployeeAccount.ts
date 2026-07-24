@@ -148,36 +148,34 @@ export const useRegisterEmployeeAccount = () => {
     };
 
     // --- [登録]ボタンクリック時にデータを永続化する ---
-    const handleSubmit =
-        useCallback(async (): Promise<void> => {
-            if (!validateForm()) {
-                return;
-            }
+    const handleSubmit = useCallback(async (): Promise<void> => {
+        setIsLoading(true);
 
-            setIsLoading(true);
+        try {
+            await service.registerEmployeeAccount({
+                ...formData,
+                accountName: formData.accountName.trim(),
+                password: formData.password.trim(),
+            });
 
-            try {
-                await service.registerEmployeeAccount({
-                    ...formData,
-                    accountName: formData.accountName.trim(),
-                    password: formData.password.trim(),
-                });
+            setStep("complete");
+        } catch (error: unknown) {
+            const message =
+                error instanceof Error
+                    ? error.message
+                    : "アカウント登録に失敗しました。";
 
-                setStep("complete");
-            } catch (error: unknown) {
-                const message =
-                    error instanceof Error
-                        ? error.message
-                        : "アカウント登録に失敗しました。";
-                setErrors((prev) => ({
-                    ...prev,
-                    accountName: message,
-                }));
-            }
-            finally {
-                setIsLoading(false);
-            }
-        }, [formData, service, validateForm]);
+            setErrors((prev) => ({
+                ...prev,
+                submit: message,
+            }));
+
+            // 登録直前に別の人が同じ名前を登録した場合など
+            setStep("input");
+        } finally {
+            setIsLoading(false);
+        }
+    }, [formData, service]);
 
     // UIコンポーネントに必要なプロパティと関数を返す
     return {

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { EmployeeAccountRegisterConfirm } from "./EmployeeAccountRegisterConfirm";
+import EmployeeAccountRegisterComplete from "./EmployeeAccountRegisterComplete";
 import {
     Select,
     SelectContent,
@@ -58,6 +59,15 @@ export const EmployeeAccountRegister = () => {
                 onBack={handleBack}
                 onSubmit={handleSubmit}
                 onCancel={() => router.push("/")}
+            />
+        );
+    }
+    if (step === "complete") {
+        return (
+            <EmployeeAccountRegisterComplete
+                employeeName={selectedEmployee?.employeeName ?? ""}
+                accountName={formData.accountName}
+                onClose={() => router.push("/")}
             />
         );
     }

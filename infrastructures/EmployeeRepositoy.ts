@@ -49,9 +49,8 @@ export class EmployeeRepository implements IEmployeeRepository {
       credentials: "include",
     });
     if (response.status === 409) {
-      const errorData: { message: string } = await response.json();
-      throw new Error(errorData.message);
-    }
+    throw new Error("このアカウント名は既に使用されています");
+}
     if (!response.ok) {
       throw new Error(
         `従業員アカウントの登録に失敗しました。(status : ${response.status})`,
