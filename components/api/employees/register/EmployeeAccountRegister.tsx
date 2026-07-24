@@ -13,7 +13,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { CircleAlert, Loader2 } from "lucide-react";
+import { CircleAlert} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 /**
@@ -32,8 +32,7 @@ export const EmployeeAccountRegister = () => {
         handleEmployeeChange,
         handleSubmit,
         handleConfirm,
-        handleBack,
-        resetForm,
+        handleBack
     } = useRegisterEmployeeAccount();
 
     /**
