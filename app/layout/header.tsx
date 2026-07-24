@@ -20,29 +20,25 @@ type HeaderProps = {
 const productItems = [
   {
     title: "商品登録",
-    href: "/",
+    href: "/admin/product/add",
   },
   {
     title: "商品検索",
-    href: "/",
+    href: "/admin/product",
   },
 ];
 
 const categoryItems = [
   {
     title: "商品カテゴリ登録",
-    href: "/",
+    href: "/admin/category/add",
   },
 ];
 
 const orderItems = [
   {
     title: "購入履歴検索",
-    href: "/",
-  },
-  {
-    title: "注文ステータス更新",
-    href: "/",
+    href: "/admin/order/search",
   },
 ];
 
