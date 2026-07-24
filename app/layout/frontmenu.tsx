@@ -13,7 +13,7 @@ export default function FrontMenuLayout({
   const pathname = usePathname();
   const { status } = useSession();
 
-  const isLoginPage = pathname === "/api/login";
+  const isLoginPage = pathname === "/admin/login";
   // const showHeaderControls = status === "authenticated" && !isLoginPage;
   const showHeaderControls = true; // 開発中は常にヘッダーのコントロールを表示する
 

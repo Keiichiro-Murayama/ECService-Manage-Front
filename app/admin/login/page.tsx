@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { LoginForm } from "@/components/auth/LoginForm";
@@ -13,9 +13,14 @@ export default function LoginPage() {
   const login = useLogin();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const hasHandledLogoutToast = useRef(false);
 
   useEffect(() => {
-    if (searchParams.get("loggedOut") === "1") {
+    if (
+      searchParams.get("loggedOut") === "1" &&
+      !hasHandledLogoutToast.current
+    ) {
+      hasHandledLogoutToast.current = true;
       toast.success("ログアウトしました。", { duration: 2000 });
       router.replace("/admin/login");
     }
