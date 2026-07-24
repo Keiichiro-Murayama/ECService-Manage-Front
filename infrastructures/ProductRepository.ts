@@ -5,6 +5,14 @@ import type { ProductRegisterRequest } from "../models/ProductRegisterRequest";
 import type { ProductUpdateRequest } from "../models/ProductUpdateRequest";
 import { injectable } from "inversify";
 
+
+/**
+ * APIから返されるエラーレスポンス
+ */
+type ErrorResponse = {
+  message?: string;
+};
+
 /**
  * ProductRepositoryクラスは、IProductRepositoryインターフェースを実装し、商品に関するデータ操作を行うリポジトリクラスです。
  */
@@ -57,7 +65,7 @@ export class ProductRepository implements IProductRepository {
    * @returns 商品詳細
    */
   async getProductDetail(productUuid: string): Promise<ProductDetail> {
-    const url = `${this.endpoint}/info?productUuid=${encodeURIComponent(productUuid)}`;
+    const url = `${this.endpoint}/${encodeURIComponent(productUuid)}`;
     const response = await fetch(url, { credentials: "include" });
 
     if (!response.ok) {
@@ -122,7 +130,7 @@ export class ProductRepository implements IProductRepository {
    * @param productUuid クエリパラメータとして使用される商品Uuid
    */
   async deleteProduct(productUuid: string): Promise<void> {
-    const url = `${this.endpoint}/delete?productUuid=${encodeURIComponent(productUuid)}`;
+    const url = `${this.endpoint}/${encodeURIComponent(productUuid)}`;
     const response = await fetch(url, {
       method: "DELETE",
       credentials: "include",
@@ -133,5 +141,27 @@ export class ProductRepository implements IProductRepository {
         `商品の削除に失敗しました。(status : ${response.status})`,
       );
     }
+  }
+  private async throwApiError(
+    response: Response,
+    fallbackMessage: string,
+  ): Promise<never> {
+    let message = fallbackMessage;
+
+    try {
+      const errorResponse =
+        (await response.json()) as ErrorResponse;
+
+      if (
+        typeof errorResponse.message === "string" &&
+        errorResponse.message.trim() !== ""
+      ) {
+        message = errorResponse.message;
+      }
+    } catch {
+      // JSONでない場合は既定メッセージを使用
+    }
+
+    throw new Error(message);
   }
 }

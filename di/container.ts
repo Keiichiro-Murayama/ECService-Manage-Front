@@ -9,6 +9,8 @@ import { IProductRepository } from "@/interfaces/IProductRepository";
 import { ICategoryRepository } from "@/interfaces/ICategoryRepository";
 import { ISearchProductsService } from "@/interfaces/ISearchProductsService";
 import { IRegisterCategoryService } from "@/interfaces/IRegisterCategoryService";
+import type { IDeleteProductService } from "@/interfaces/IDeleteProductService";
+
 
 // 実装クラス
 import { EmployeeRepository } from "@/infrastructures/EmployeeRepositoy";
@@ -17,7 +19,7 @@ import { ProductRepository } from "@/infrastructures/ProductRepository";
 import { CategoryRepository } from "@/infrastructures/CategoryRepository";
 import { SearchProductsService } from "@/services/SearchProductsService";
 import { RegisterCategoryService } from "@/services/RegisterCategoryService";
-
+import { DeleteProductService } from "@/services/DeleteProductService";
 
 /**
  * データアクセスとサービスを実装する
@@ -43,6 +45,7 @@ container.bind<ICategoryRepository>(TYPES.ICategoryRepository).to(CategoryReposi
 // サービス(ユースケース)の登録
 container.bind<IRegisterEmployeeAccountService>(TYPES.IRegisterEmployeeAccountService).to(RegisterEmployeeAccountService);
 container.bind<ISearchProductsService>(TYPES.ISearchProductsService).to(SearchProductsService);
+container.bind<IDeleteProductService>(TYPES.IDeleteProductService).to(DeleteProductService);
 container.bind<IRegisterCategoryService>(TYPES.IRegisterCategoryService).to(RegisterCategoryService);
 
 
