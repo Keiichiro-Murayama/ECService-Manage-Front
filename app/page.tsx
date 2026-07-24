@@ -5,8 +5,6 @@ import {
   User,
   type LucideIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import MenuCard from "@/components/api/menu/MenuCard";
 
 type MenuCardItem = {
