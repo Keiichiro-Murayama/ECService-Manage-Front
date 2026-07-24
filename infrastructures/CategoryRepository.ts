@@ -59,12 +59,22 @@ export class CategoryRepository implements ICategoryRepository {
       credentials: "include",
     });
 
-    if (!response.ok) {
-      console.log(response.body)
-      throw new Error(
-        `カテゴリの登録に失敗しました。(status : ${response.status})`,
-      );
-      
+if (!response.ok) {
+    switch (response.status) {
+        case 400:
+            throw new Error("カテゴリの形式が正しくありません。");
+
+        case 401:
+            throw new Error("認証が切れています。");
+
+        case 409:
+            throw new Error("このカテゴリ名は既に登録されています。");
+
+        default:
+            throw new Error(
+                `カテゴリの登録に失敗しました。(status: ${response.status})`
+            );
     }
+}
   }
 }
