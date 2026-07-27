@@ -15,7 +15,7 @@ export function useLogin() {
   const router = useRouter();
 
   // --- 入力値の状態 ---
-  const [username, setUsername] = useState("");
+  const [accountName, setAccountName] = useState("");
   const [password, setPassword] = useState("");
 
   // --- 補助状態 ---
@@ -29,22 +29,38 @@ export function useLogin() {
   const submit = async () => {
     setError(null);
 
+    /**以下のバリデーションはFormタグ内のバリデーションが優先される */
     // 入力チェック:どちらか空なら API を呼ばずに促す
-    if (!username.trim() || !password) {
-      setError("ユーザー名とパスワードを入力してください。");
+    if (!accountName.trim()) {
+      setError("アカウント名を入力してください。");
+      return;
+    }
+    if (!password) {
+      setError("パスワードを入力してください。");
+      return;
+    }
+    //アカウント名とパスワードが5文字以上20文字以内であることを確認
+    if (accountName.trim().length < 5 || accountName.trim().length > 20) {
+      setError("アカウント名は5文字以上20文字以内で入力してください。");
+      return;
+    }
+    if (password.length < 5 || password.length > 20) {
+      setError("パスワードは5文字以上20文字以内で入力してください。");
       return;
     }
 
     setSubmitting(true);
     try {
       const result = await signIn("credentials", {
-        username,
+        username: accountName.trim(),
         password,
         redirect: false,
       });
 
+      console.log("signIn result:", result);
+
       if (!result || result.error) {
-        setError("ユーザー名またはパスワードが正しくありません。");
+        setError("アカウント名またはパスワードが正しくありません。");
         return;
       }
 
@@ -79,8 +95,8 @@ export function useLogin() {
   };
 
   return {
-    username,
-    setUsername,
+    accountName,
+    setAccountName,
     password,
     setPassword,
     submitting,
