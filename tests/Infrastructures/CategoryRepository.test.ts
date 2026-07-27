@@ -86,7 +86,7 @@ describe("CategoryRepository", () => {
             } as Response);
 
             await expect(
-                repository.addCategory("テスト"),
+                repository.addCategory("あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほま"),
             ).rejects.toThrow(
                 "カテゴリの形式が正しくありません。",
             );
