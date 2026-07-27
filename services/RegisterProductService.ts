@@ -7,25 +7,12 @@ import type { ProductRegisterRequest } from "@/models/ProductRegisterRequest";
 import { inject, injectable } from "inversify";
 
 /**
- * 画像アップロードAPIのレスポンス
- */
-type UploadProductImageResponse = {
-  imageUrl: string;
-};
-
-/**
  * 新商品登録画面で使用する処理を統括するサービス
  */
 @injectable()
 export class RegisterProductService
   implements IRegisterProductService
 {
-  /**
-   * 商品画像アップロードAPI
-   */
-  private readonly imageUploadEndpoint =
-    "/proxy-api/product-images";
-
   /**
    * コンストラクタ
    *
@@ -50,57 +37,14 @@ export class RegisterProductService
   }
 
   /**
-   * 商品画像をアップロードする
-   *
-   * @param imageFile アップロードする画像ファイル
-   * @returns アップロード後の画像URL
-   */
-  async uploadProductImage(
-    imageFile: File,
-  ): Promise<string> {
-    const formData = new FormData();
-
-    formData.append("image", imageFile);
-
-    const response = await fetch(
-      this.imageUploadEndpoint,
-      {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      },
-    );
-
-    if (!response.ok) {
-      throw new Error(
-        `商品画像のアップロードに失敗しました。(status : ${response.status})`,
-      );
-    }
-
-    const result =
-      (await response.json()) as UploadProductImageResponse;
-
-    if (
-      typeof result.imageUrl !== "string" ||
-      result.imageUrl.trim() === ""
-    ) {
-      throw new Error(
-        "画像アップロードAPIから画像URLが返されませんでした。",
-      );
-    }
-
-    return result.imageUrl;
-  }
-
-  /**
-   * 新商品を登録する
+   * 商品画像を含む新商品を登録する
    *
    * @param product 登録する商品情報
    */
   async register(
     product: ProductRegisterRequest,
   ): Promise<void> {
-    await this.productRepository.addProduct(product);
+    await this.productRepository.addProduct(product); //石原:変更 商品情報と画像を商品登録処理へ一括で渡す
   }
 }
 
@@ -116,4 +60,3 @@ export class RegisterProductService
 // ⠀⠀⠀⠀⠈⠁⠀⠈⠻⢿⣦⣄⠀⣠⣾⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀
 // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-

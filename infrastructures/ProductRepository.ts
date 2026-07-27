@@ -1,20 +1,16 @@
 import { ProductDetail } from "@/models/ProductDetail";
+
 import type { IProductRepository } from "../interfaces/IProductRepository";
 import type { Product } from "../models/Product";
 import type { ProductRegisterRequest } from "../models/ProductRegisterRequest";
 import type { ProductUpdateRequest } from "../models/ProductUpdateRequest";
+
 import { injectable } from "inversify";
 
-
 /**
- * APIから返されるエラーレスポンス
- */
-type ErrorResponse = {
-  message?: string;
-};
-
-/**
- * ProductRepositoryクラスは、IProductRepositoryインターフェースを実装し、商品に関するデータ操作を行うリポジトリクラスです。
+ * ProductRepositoryクラスは、
+ * IProductRepositoryインターフェースを実装し、
+ * 商品に関するデータ操作を行うリポジトリクラスです。
  */
 @injectable()
 export class ProductRepository implements IProductRepository {
@@ -22,9 +18,9 @@ export class ProductRepository implements IProductRepository {
   private readonly endpoint: string = "/proxy-api/products";
 
   /**
-   *  商品を検索する
-   * @param categoryUuid 商品カテゴリUuid（指定されない場合は全商品検索）
-   *                     クエリパラメータとして使用されます。
+   * 商品を検索する
+   *
+   * @param categoryUuid 商品カテゴリUuid
    * @returns 商品の配列
    */
   async searchProducts(
@@ -32,8 +28,8 @@ export class ProductRepository implements IProductRepository {
   ): Promise<Product[]> {
     const url = categoryUuid
       ? `${this.endpoint}?categoryUuid=${encodeURIComponent(
-        categoryUuid,
-      )}`
+          categoryUuid,
+        )}`
       : this.endpoint;
 
     const response = await fetch(url, {
@@ -49,7 +45,10 @@ export class ProductRepository implements IProductRepository {
     const data: unknown = await response.json();
 
     if (!Array.isArray(data)) {
-      console.error("商品検索APIのレスポンス:", data);
+      console.error(
+        "商品検索APIのレスポンス:",
+        data,
+      );
 
       throw new Error(
         "商品検索APIのレスポンス形式が不正です。",
@@ -60,74 +59,130 @@ export class ProductRepository implements IProductRepository {
   }
 
   /**
- * 商品詳細を取得する
- *
- * @param productUuid 商品UUID
- * @returns 商品詳細
- */
-async getProductDetail(
-  productUuid: string,
-): Promise<ProductDetail> {
-  const url =
-    `${this.endpoint}/info?productUuid=${encodeURIComponent(
-      productUuid,
-    )}`;
-
-  const response = await fetch(url, {
-    method: "GET",
-    credentials: "include",
-  });
-
-  if (!response.ok) {
-    await this.throwApiError(
-      response,
-      `商品の詳細取得に失敗しました。(status : ${response.status})`,
-    );
-  }
-
-  const data =
-    (await response.json()) as ProductDetail;
-
-  return data;
-}
-
-  /**
-   * 新しい商品を追加する
-   * @param newProduct 新しい商品の情報
+   * 商品詳細を取得する
+   *
+   * @param productUuid 商品Uuid
+   * @returns 商品詳細
    */
-  async addProduct(newProduct: ProductRegisterRequest): Promise<void> {
-    const response = await fetch(this.endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newProduct),
+  async getProductDetail(
+    productUuid: string,
+  ): Promise<ProductDetail> {
+    const url =
+      `${this.endpoint}/info` +
+      `?productUuid=${encodeURIComponent(
+        productUuid,
+      )}`;
+
+    const response = await fetch(url, {
       credentials: "include",
     });
 
     if (!response.ok) {
       throw new Error(
-        `商品の登録に失敗しました。(status : ${response.status})`,
+        `商品の詳細取得に失敗しました。(status : ${response.status})`,
       );
+    }
+
+    const data: ProductDetail =
+      await response.json();
+
+    return data;
+  }
+
+  /**
+   * 商品画像を含む新しい商品を追加する
+   *
+   * @param newProduct 新しい商品の情報
+   */
+  async addProduct(
+    newProduct: ProductRegisterRequest,
+  ): Promise<void> {
+    const formData = new FormData(); //石原:変更 商品情報と画像をmultipart/form-dataで送信する
+
+    formData.append(
+      "productName",
+      newProduct.productName,
+    ); //石原:変更 商品名をフォームデータへ追加する
+
+    formData.append(
+      "price",
+      String(newProduct.price),
+    ); //石原:変更 価格を文字列へ変換してフォームデータへ追加する
+
+    formData.append(
+      "stock",
+      String(newProduct.stock),
+    ); //石原:変更 在庫数を文字列へ変換してフォームデータへ追加する
+
+    formData.append(
+      "categoryUuid",
+      newProduct.categoryUuid,
+    ); //石原:変更 カテゴリUUIDをフォームデータへ追加する
+
+    formData.append(
+      "image",
+      newProduct.image,
+    ); //石原:変更 選択した画像ファイルをフォームデータへ追加する
+
+    const response = await fetch(
+      this.endpoint,
+      {
+        method: "POST",
+        body: formData, //石原:変更 JSONではなくフォームデータを送信する
+        credentials: "include",
+      },
+    );
+
+    if (!response.ok) {
+      let message =
+        `商品の登録に失敗しました。` +
+        `(status : ${response.status})`;
+
+      try {
+        const errorResponse: unknown =
+          await response.json();
+
+        if (
+          typeof errorResponse === "object" &&
+          errorResponse !== null &&
+          "message" in errorResponse &&
+          typeof errorResponse.message ===
+            "string"
+        ) {
+          message = errorResponse.message;
+        }
+      } catch {
+        // JSON形式でない場合は既定のメッセージを使用する
+      }
+
+      throw new Error(message);
     }
   }
 
   /**
    * 商品情報を更新する
-   * @param productUuid クエリパラメータとして使用される商品Uuid
-   * @param updatedProduct
+   *
+   * @param productUuid 商品Uuid
+   * @param updatedProduct 更新する商品情報
    */
   async updateProduct(
     productUuid: string,
     updatedProduct: ProductUpdateRequest,
   ): Promise<void> {
-    const url = `${this.endpoint}/update?productUuid=${encodeURIComponent(productUuid)}`;
+    const url =
+      `${this.endpoint}/update` +
+      `?productUuid=${encodeURIComponent(
+        productUuid,
+      )}`;
+
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedProduct),
+      body: JSON.stringify(
+        updatedProduct,
+      ),
       credentials: "include",
     });
 
@@ -140,10 +195,18 @@ async getProductDetail(
 
   /**
    * 商品を削除する
-   * @param productUuid クエリパラメータとして使用される商品Uuid
+   *
+   * @param productUuid 商品Uuid
    */
-  async deleteProduct(productUuid: string): Promise<void> {
-    const url = `${this.endpoint}/${encodeURIComponent(productUuid)}`;
+  async deleteProduct(
+    productUuid: string,
+  ): Promise<void> {
+    const url =
+      `${this.endpoint}/delete` +
+      `?productUuid=${encodeURIComponent(
+        productUuid,
+      )}`;
+
     const response = await fetch(url, {
       method: "DELETE",
       credentials: "include",
@@ -154,27 +217,5 @@ async getProductDetail(
         `商品の削除に失敗しました。(status : ${response.status})`,
       );
     }
-  }
-  private async throwApiError(
-    response: Response,
-    fallbackMessage: string,
-  ): Promise<never> {
-    let message = fallbackMessage;
-
-    try {
-      const errorResponse =
-        (await response.json()) as ErrorResponse;
-
-      if (
-        typeof errorResponse.message === "string" &&
-        errorResponse.message.trim() !== ""
-      ) {
-        message = errorResponse.message;
-      }
-    } catch {
-      // JSONでない場合は既定メッセージを使用
-    }
-
-    throw new Error(message);
   }
 }
