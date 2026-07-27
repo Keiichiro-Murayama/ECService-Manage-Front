@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-
 /**
  * ログインフォームの状態とロジックを管理するカスタムフック
  *
@@ -35,29 +34,17 @@ export function useLogin() {
 
     setSubmitting(true);
     try {
-      const res = await fetch("/proxy-api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        // C# 側で認証失敗(401 など)
-        setError("ユーザー名またはパスワードが正しくありません。");
-        return;
-      }
-
       const result = await signIn("credentials", {
         username,
         password,
         redirect: false,
       });
 
-      if (result?.error) {
-        setError("ログイン状態の確立に失敗しました。");
+      if (!result || result.error) {
+        setError("ユーザー名またはパスワードが正しくありません。");
         return;
       }
+
       router.push("/");
     } catch (e) {
       console.error("ログインエラー:", e);
