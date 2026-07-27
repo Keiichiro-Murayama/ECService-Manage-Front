@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 
+
 test.describe("商品カテゴリ登録", () => {
 
     test.beforeEach(async ({ page }) => {

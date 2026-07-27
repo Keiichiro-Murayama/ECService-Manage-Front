@@ -37,10 +37,14 @@ export default defineConfig({
   projects: [
     //ログインを行い、認証状態をファイルへ保存する
     { name: "setup", testMatch: /.*\.setup\.ts/ },
-    {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
-    },
+{
+  name: "chromium",
+  use: {
+    ...devices["Desktop Chrome"],
+    storageState: "e2e/.auth/admin.json",
+  },
+  dependencies: ["setup"],
+},
 
     // {
     //   name: "firefox",
