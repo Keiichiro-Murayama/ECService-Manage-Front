@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { EmployeeRepository } from "@/infrastructures/EmployeeRepositoy";
-import type { EmployeeAccountRegistration } from "@/models/EmployeeAccountRegistration";
 
 describe("EmployeeRepository", () => {
 
@@ -54,7 +53,7 @@ describe("EmployeeRepository", () => {
 
     describe("addEmployeeAccount", () => {
 
-        const account: EmployeeAccountRegistration = {
+        const account: Parameters<EmployeeRepository["addEmployeeAccount"]>[0] = {
             employeeUuid: "1",
             accountName: "testuser",
             password: "password123",

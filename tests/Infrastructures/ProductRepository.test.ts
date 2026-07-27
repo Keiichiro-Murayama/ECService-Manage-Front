@@ -1,9 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ProductRepository } from "@/infrastructures/ProductRepository";
-import type { ProductRegisterRequest } from "@/models/ProductRegisterRequest";
-import type { ProductUpdateRequest } from "@/models/ProductUpdateRequest";
 
-const REGISTER_REQUEST: ProductRegisterRequest = {
+const REGISTER_REQUEST: Parameters<ProductRepository["addProduct"]>[0] = {
     productName: "ノートPC",
     price: 100000,
     stock: 10,
@@ -11,7 +9,7 @@ const REGISTER_REQUEST: ProductRegisterRequest = {
     imageUrl: "https://example.com/image.png",
 };
 
-const UPDATE_REQUEST: ProductUpdateRequest = {
+const UPDATE_REQUEST: Parameters<ProductRepository["updateProduct"]>[1] = {
     productUuid: "1",
     price: 120000,
     stock: 5,
