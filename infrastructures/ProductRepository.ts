@@ -201,11 +201,8 @@ export class ProductRepository implements IProductRepository {
   async deleteProduct(
     productUuid: string,
   ): Promise<void> {
-    const url =
-      `${this.endpoint}/delete` +
-      `?productUuid=${encodeURIComponent(
-        productUuid,
-      )}`;
+   const url =
+  `${this.endpoint}/${encodeURIComponent(productUuid)}`;
 
     const response = await fetch(url, {
       method: "DELETE",
