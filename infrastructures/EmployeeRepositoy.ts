@@ -5,7 +5,7 @@ import type { EmployeeAccountRegistration } from "@/models/EmployeeAccountRegist
 import { injectable } from "inversify";
 
 /**
- * APIから返された値がEmployeeか判定する
+ * APIから返された値がEmployee形式か判定する
  */
 const isEmployee = (
   value: unknown,
@@ -26,9 +26,39 @@ const isEmployee = (
 };
 
 /**
+ * APIレスポンスからメッセージを取得する
+ */
+const getResponseMessage = async (
+  response: Response,
+): Promise<string | null> => {
+  try {
+    const data: unknown =
+      await response.json();
+
+    if (
+      typeof data === "object" &&
+      data !== null &&
+      "message" in data &&
+      typeof data.message === "string" &&
+      data.message.trim() !== ""
+    ) {
+      return data.message;
+    }
+  } catch {
+    /*
+     * レスポンス本文がない場合や、
+     * JSON形式ではない場合はnullを返す。
+     */
+  }
+
+  return null;
+};
+
+/**
  * EmployeeRepository
  *
- * 未登録社員取得と担当者アカウント登録を担当する。
+ * 未登録社員一覧の取得と、
+ * 従業員アカウント登録を担当する。
  */
 @injectable()
 export class EmployeeRepository
@@ -41,7 +71,7 @@ export class EmployeeRepository
     "/proxy-api/employees/unregistered";
 
   /**
-   * 担当者アカウント登録API
+   * 従業員アカウント登録API
    */
   private readonly employeeAccountEndpoint =
     "/proxy-api/accounts";
@@ -49,7 +79,7 @@ export class EmployeeRepository
   /**
    * 未登録社員一覧を取得する
    */
-  async getUnregisteredEmployees():
+  public async getUnregisteredEmployees():
     Promise<Employee[]> {
     const response = await fetch(
       this.employeeEndpoint,
@@ -63,21 +93,20 @@ export class EmployeeRepository
     );
 
     if (!response.ok) {
-      const message =
-        await this.getErrorMessage(
-          response,
-          `未登録社員一覧の取得に失敗しました。` +
-            `(status : ${response.status})`,
-        );
+      const responseMessage =
+        await getResponseMessage(response);
 
-      throw new Error(message);
+      throw new Error(
+        responseMessage ??
+          `未登録社員一覧の取得に失敗しました。(status : ${response.status})`,
+      );
     }
 
     const data: unknown =
       await response.json();
 
     /*
-     * バックが配列を直接返す場合
+     * APIが配列を直接返す場合
      */
     if (
       Array.isArray(data) &&
@@ -87,7 +116,9 @@ export class EmployeeRepository
     }
 
     /*
-     * { employees: [...] }形式にも対応する
+     * APIが
+     * { employees: [...] }
+     * の形式で返す場合
      */
     if (
       typeof data === "object" &&
@@ -100,7 +131,7 @@ export class EmployeeRepository
     }
 
     console.error(
-      "未登録社員取得APIのレスポンス形式が不正です。",
+      "未登録社員取得APIのレスポンス:",
       data,
     );
 
@@ -110,9 +141,9 @@ export class EmployeeRepository
   }
 
   /**
-   * 担当者アカウントを登録する
+   * 従業員アカウントを登録する
    */
-  async addEmployeeAccount(
+  public async addEmployeeAccount(
     newEmployeeAccount:
       EmployeeAccountRegistration,
   ): Promise<void> {
@@ -120,6 +151,7 @@ export class EmployeeRepository
       this.employeeAccountEndpoint,
       {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type":
             "application/json",
@@ -128,46 +160,36 @@ export class EmployeeRepository
         body: JSON.stringify(
           newEmployeeAccount,
         ),
-        credentials: "include",
       },
     );
 
-    if (!response.ok) {
-      const message =
-        await this.getErrorMessage(
-          response,
-          `担当者アカウントの登録に失敗しました。` +
-            `(status : ${response.status})`,
-        );
-
-      throw new Error(message);
-    }
-  }
-
-  /**
-   * APIのエラーメッセージを取得する
-   */
-  private async getErrorMessage(
-    response: Response,
-    fallbackMessage: string,
-  ): Promise<string> {
-    try {
-      const data: unknown =
-        await response.json();
-
-      if (
-        typeof data === "object" &&
-        data !== null &&
-        "message" in data &&
-        typeof data.message === "string" &&
-        data.message.trim() !== ""
-      ) {
-        return data.message;
-      }
-    } catch {
-      // JSONではない場合は既定メッセージを使用する
+    if (response.ok) {
+      return;
     }
 
-    return fallbackMessage;
+    const responseMessage =
+      await getResponseMessage(response);
+
+    /*
+     * APIから具体的なメッセージが返された場合は、
+     * その内容を優先する。
+     */
+    if (responseMessage !== null) {
+      throw new Error(responseMessage);
+    }
+
+    /*
+     * 409でレスポンス本文がない場合は、
+     * アカウント名重複として扱う。
+     */
+    if (response.status === 409) {
+      throw new Error(
+        "このアカウント名は既に使用されています",
+      );
+    }
+
+    throw new Error(
+      `従業員アカウントの登録に失敗しました。(status : ${response.status})`,
+    );
   }
 }
