@@ -47,25 +47,7 @@ jobs:
           host: ${{ secrets.ECSERVICE_AZURE_HOST }}
           username: ${{ secrets.ECSERVICE_AZURE_USER }}
           key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
-          source: |
-            app
-            components
-            di
-            hooks
-            infrastructures
-            schemas
-            interfaces
-            lib
-            models
-            public
-            services
-            middleware.ts
-            next.config.ts
-            next-env.d.ts
-            package.json
-            package-lock.json
-            postcss.config.mjs
-            tsconfig.json
+          source: "app,components,di,hooks,infrastructures,schemas,interfaces,lib,models,public,services,types,middleware.ts,next.config.ts,next-env.d.ts,package.json,package-lock.json,postcss.config.mjs,tsconfig.json"
           target: "/var/www/ecservice-manage-front"
           overwrite: true
 
