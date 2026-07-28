@@ -20,10 +20,10 @@ export default function middleware(
   req: NextRequestWithAuth,
   event: NextFetchEvent,
 ) {
-  // 開発中は認証チェックをスキップする
-  if (process.env.NODE_ENV === "development") {
-    return NextResponse.next();
-  }
+  // // 開発中は認証チェックをスキップする
+  // if (process.env.NODE_ENV === "development") {
+  //   return NextResponse.next();
+  // }
 
   return authMiddleware(req, event);
 }
