@@ -9,6 +9,17 @@ export interface IProductRepository {
   getProductDetail(productUuid: string): Promise<ProductDetail>;
   /**商品登録*/
   addProduct(newProduct: ProductRegisterRequest): Promise<void>;
+    /** 商品画像アップロード */
+  uploadProductImage(
+    productName: string,
+    image: File,
+  ): Promise<string>; //石原:追加
+
+  /** 商品画像削除 */
+  deleteProductImage(
+    imageUrl: string,
+  ): Promise<void>; //石原:追加
+  
   /**商品更新*/
   updateProduct(
     productUuid: string,
