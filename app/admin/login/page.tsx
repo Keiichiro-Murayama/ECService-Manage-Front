@@ -37,11 +37,11 @@ function LoginPageContent() {
           </span>
         </div>
         <LoginForm
-          username={login.username}
+          accountName={login.accountName}
           password={login.password}
           submitting={login.submitting}
           error={login.error}
-          onUsernameChange={login.setUsername}
+          onAccountNameChange={login.setAccountName}
           onPasswordChange={login.setPassword}
           onSubmit={login.submit}
         />

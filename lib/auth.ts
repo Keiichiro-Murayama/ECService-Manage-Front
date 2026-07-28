@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
  * NextAuthのオプション設定
  */
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -52,7 +53,7 @@ export const authOptions: NextAuthOptions = {
     //  封筒(token)の中身を使えるように公開(session)する
     async session({ session, token }) {
       // トークンの全内容をセッションのuserプロパティに詰め替える
-      session.user = token as typeof session.user;//不要なany修正
+      session.user = token as typeof session.user; //不要なany修正
       return session;
     },
   },

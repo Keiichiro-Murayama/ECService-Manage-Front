@@ -12,7 +12,6 @@ import {
   type SubmitHandler,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { container } from "@/di/container";
 import { TYPES } from "@/di/types";
 import type { IRegisterProductService } from "@/interfaces/IRegisterProductService";
@@ -354,10 +353,7 @@ export const useRegisterProduct = () => {
   }, [clearErrors]);
 
   /**
-   * 商品を登録する
-   *
-   * 1. 商品画像をアップロードする
-   * 2. 取得した画像URLを商品登録APIへ渡す
+   * 商品画像を含む商品情報を登録する
    */
   const registerProduct:
     SubmitHandler<ProductRegisterFormValues> =
@@ -371,15 +367,6 @@ export const useRegisterProduct = () => {
         clearErrors();
 
         try {
-          /**
-           * 商品画像を先にアップロードする
-           */
-          const imageUrl =
-            await registerProductService
-              .uploadProductImage(
-                values.image,
-              );
-
           /**
            * 商品登録APIへ渡すリクエスト
            */
@@ -395,12 +382,12 @@ export const useRegisterProduct = () => {
             categoryUuid:
               values.categoryUuid,
 
-            imageUrl,
+            image: values.image, //石原:変更 画像URLではなく選択した画像ファイルを渡す
           };
 
           await registerProductService.register(
             request,
-          );
+          ); //石原:変更 商品情報と画像を1回のAPI通信で登録する
 
           setConfirmedValues(values);
           setStep("complete");

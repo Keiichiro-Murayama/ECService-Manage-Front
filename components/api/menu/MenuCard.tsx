@@ -17,10 +17,10 @@ export default function MenuCard({ title, actions, icon: Icon }: Props) {
           {title}
         </CardTitle>
       </CardHeader>
-      {/* ボタンの幅が広すぎるのでカードの30％まで */}
+
       <CardContent
         className="flex flex-col gap-4 items-center w-full"
-        style={{ maxWidth: "80%" }}
+        style={{ maxWidth: "90%" }}
       >
         {actions.map((action) => (
           <a key={action.label} href={action.href} className="w-full">

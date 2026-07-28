@@ -4,7 +4,7 @@ import path from "path";
 const authFile = path.join(__dirname, ".auth/admin.json");
 setup("ログインして認証状態を保存する", async ({ page }) => {
   await page.goto("/admin/login");
-  await page.getByLabel("ユーザー名").fill("Suzuki");
+  await page.getByLabel("アカウント名").fill("Suzuki");
   await page.getByLabel("パスワード").fill("SuzukiPass");
   await page.getByRole("button", { name: "ログイン" }).click();
   await page.waitForURL("/");

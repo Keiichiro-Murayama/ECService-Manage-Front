@@ -6,6 +6,8 @@
 export interface ProductUpdateRequest {
   /** 商品UUID */
   productUuid: string;
+   /** 商品名 */
+  productName: string; //石原:追加
   /** 商品の価格 */
   price: number;
   /** 商品の在庫数 */
