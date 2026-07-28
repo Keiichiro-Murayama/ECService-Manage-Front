@@ -16,6 +16,8 @@ import { injectable } from "inversify";
 export class ProductRepository implements IProductRepository {
   /** 商品APIのエンドポイント */
   private readonly endpoint: string = "/proxy-api/products";
+  /** 商品画像APIのエンドポイント */
+  private readonly imageEndpoint: string = "/proxy-api/product-images"; //石原:追加
 
   /**
    * 商品を検索する
@@ -28,8 +30,8 @@ export class ProductRepository implements IProductRepository {
   ): Promise<Product[]> {
     const url = categoryUuid
       ? `${this.endpoint}?categoryUuid=${encodeURIComponent(
-          categoryUuid,
-        )}`
+        categoryUuid,
+      )}`
       : this.endpoint;
 
     const response = await fetch(url, {
@@ -147,7 +149,7 @@ export class ProductRepository implements IProductRepository {
           errorResponse !== null &&
           "message" in errorResponse &&
           typeof errorResponse.message ===
-            "string"
+          "string"
         ) {
           message = errorResponse.message;
         }
@@ -158,6 +160,109 @@ export class ProductRepository implements IProductRepository {
       throw new Error(message);
     }
   }
+
+  /**
+ * 商品画像をアップロードする
+ *
+ * @param productName 商品名
+ * @param image 商品画像
+ * @returns アップロードした画像URL
+ */
+  async uploadProductImage(
+    productName: string,
+    image: File,
+  ): Promise<string> {
+    const formData = new FormData();
+
+    formData.append(
+      "productName",
+      productName,
+    );
+
+    formData.append(
+      "image",
+      image,
+    );
+
+    const response = await fetch(
+      this.imageEndpoint,
+      {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      },
+    );
+
+    if (!response.ok) {
+      let message =
+        `商品画像のアップロードに失敗しました。` +
+        `(status : ${response.status})`;
+
+      try {
+        const errorResponse: unknown =
+          await response.json();
+
+        if (
+          typeof errorResponse === "object" &&
+          errorResponse !== null &&
+          "message" in errorResponse &&
+          typeof errorResponse.message ===
+          "string"
+        ) {
+          message = errorResponse.message;
+        }
+      } catch {
+        // JSON以外の場合は既定メッセージを使う
+      }
+
+      throw new Error(message);
+    }
+
+    const data: unknown =
+      await response.json();
+
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      !("imageUrl" in data) ||
+      typeof data.imageUrl !== "string" ||
+      data.imageUrl.trim() === ""
+    ) {
+      throw new Error(
+        "商品画像APIのレスポンス形式が不正です。",
+      );
+    }
+
+    return data.imageUrl;
+  }
+
+  /**
+   * 商品画像を削除する
+   *
+   * @param imageUrl 削除する画像URL
+   */
+  async deleteProductImage(
+    imageUrl: string,
+  ): Promise<void> {
+    const url =
+      `${this.imageEndpoint}` +
+      `?imageUrl=${encodeURIComponent(
+        imageUrl,
+      )}`;
+
+    const response = await fetch(url, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品画像の削除に失敗しました。` +
+        `(status : ${response.status})`,
+      );
+    }
+  }
+
 
   /**
    * 商品情報を更新する
@@ -201,8 +306,8 @@ export class ProductRepository implements IProductRepository {
   async deleteProduct(
     productUuid: string,
   ): Promise<void> {
-   const url =
-  `${this.endpoint}/${encodeURIComponent(productUuid)}`;
+    const url =
+      `${this.endpoint}/${encodeURIComponent(productUuid)}`;
 
     const response = await fetch(url, {
       method: "DELETE",
