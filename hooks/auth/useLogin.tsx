@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 export function useLogin() {
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
+  const [accountName, setAccountName] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -13,7 +13,7 @@ export function useLogin() {
   const submit = async () => {
     setError(null);
 
-    if (!username.trim() || !password) {
+    if (!accountName.trim() || !password) {
       setError("ユーザー名とパスワードを入力してください。");
       return;
     }
@@ -22,7 +22,7 @@ export function useLogin() {
 
     try {
       const result = await signIn("credentials", {
-        username: username.trim(),
+        username: accountName.trim(),
         password,
         redirect: false,
         callbackUrl: "/",
@@ -49,8 +49,8 @@ export function useLogin() {
   };
 
   return {
-    username,
-    setUsername,
+    accountName,
+    setAccountName,
     password,
     setPassword,
     submitting,
