@@ -16,4 +16,6 @@ export const TYPES = {
   IRegisterProductService: Symbol.for("IRegisterProductService",),
   ISearchOrderHistoriesService: Symbol.for("ISearchOrderHistoriesService",),
   IUpdateProductService: Symbol.for("IUpdateProductService", ), 
+  IUpdateOrderStatusService:
+  Symbol.for("IUpdateOrderStatusService",),
 } as const;
