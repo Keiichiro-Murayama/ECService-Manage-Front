@@ -71,23 +71,17 @@ export function useLogin() {
       if (session?.user) {
         // バックエンド API の認証レスポンス構造に応じて JWT を取出
         // 一般的な C# API は accessToken / token / jwtToken のいずれかのキーを返す
-        const tokenValue = session.user.token;
+        const tokenValue =
+          (session.user as any).accessToken ||
+          (session.user as any).token ||
+          (session.user as any).jwtToken;
 
-        if (typeof tokenValue === "string") {
-          document.cookie = `access_token=${tokenValue}; path=/; SameSite=Lax`;
-        }
-
-        if (typeof tokenValue === "string") {
-          document.cookie = `access_token=${tokenValue}; path=/; SameSite=Lax`;
-        }
-
-        if (tokenValue && typeof tokenValue === "string") {
-          // JWT を access_token Cookie に保存
-          // path=/: サイト全体で有効
-          // SameSite=Lax: 同一サイト内でのフォーム送信時に Cookie を送信
-          // ブラウザの credentials: include でクロスオリジン送信時も送信される
-          document.cookie = `access_token=${tokenValue}; path=/; SameSite=Lax`;
-        }
+      if (tokenValue && typeof tokenValue === "string") {
+        // JWT を access_token Cookie に保存
+        // path=/: サイト全体で有効
+        // SameSite=Lax: 同一サイト内でのフォーム送信時に Cookie を送信
+        // ブラウザの credentials: include でクロスオリジン送信時も送信される
+        document.cookie = `access_token=${tokenValue}; path=/; SameSite=Lax`;
       }
 
       router.push("/");
@@ -109,3 +103,9 @@ export function useLogin() {
     submit,
   };
 }
+
+type SessionUserWithToken = {
+  accessToken?: string;
+  token?: string;
+  jwtToken?: string;
+};
