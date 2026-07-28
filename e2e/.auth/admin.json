@@ -1,0 +1,55 @@
+{
+  "cookies": [
+    {
+      "name": "next-auth.csrf-token",
+      "value": "8c07812ef76c1f2e0b6230aefcd19f6ba7f5c78e5d774ced34b2e64887777969%7Cabb80dd387c73aa83cdb9d4a2f6366637a59e91d9aab67760f4cf3a82f32bcb5",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "access_token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJFQ1NlcnZpY2UiLCJpc3MiOiJFQ1NlcnZpY2UiLCJleHAiOjE3ODQ4NzU4NDIsInN1YiI6IjFhNWRlYzU2LTI4NWMtNDJmYy1hZjE1LWUzM2FiYjEwYjI3NyIsImlhdCI6MTc4NDg3NDA0MiwibmJmIjoxNzg0ODc0MDQyfQ.dEC9iC17qWryVWU8uWbEgreHSO_o8q1UPzTo7wa69i4",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1784877643.005514,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "next-auth.callback-url",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2Fadmin%2Flogin",
+      "domain": "localhost",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "next-auth.session-token",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..912lbXWhTdp4TPYz.-9Bc0Kpha8yGrpui_bX3Wo3m6F3kyaKnF4r7hV2HwUts1JwyC0AjbqIyA7vO9l7tyJmI-cX9-Dr3vbSv3jfLZHyuBkzmf7yZggrXY7S_Glbvi-7ET_G_BK6IU8V29NoT6sjV_bpJCKzt6qLMIn5ZvKOJNrgVUOOyPqLTrmFcvnMUTNqtlfvgMtCPrZ96WiHdJR6iaSs0ghhFipUsXvzVr1q_YgRZG1pbGGdJqwbFzXd-tkIomlCQjL_5BJKEV20xFwEPrv8CoFnWSrYZCGb28J_tNckAHJgqVB7iOrJ6GBwcFZlKHkeN0iu4hwE9DKLKcdMykxLxsQKy7zMU6gAss3NPjB8d-vnbY7eeee1TYCS8rNx29p8P0bYDDYUQFeHhPofXoUEzRmOxQLbB0njxJvrH_JygXdgNlsIpIUSAUww2NQKASifQBpO6QOAhN80vIPqyF_E1XHsR5aCKz22tfwi3Rq496gguBR5vwMf7ZSRaIWK7Sj4N0KxQJYlx7aLh15SmditlSGfqwegkud-coFXgSZ-zsdLCT_jFuTwSM27tsGz7iO-0S2v0f7X7j2L97pCEa13HJotNAmBdLJ3Gjuyv3G1eaODPnX4zC7WZHfISrQ04FZIq4W5amQ.zI3td7YPZ6o9L0n13q-vxw",
+      "domain": "localhost",
+      "path": "/",
+      "expires": 1787466043.707659,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "nextauth.message",
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1784874042}"
+        }
+      ]
+    }
+  ]
+}
