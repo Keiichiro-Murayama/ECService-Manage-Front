@@ -10,6 +10,9 @@
 !.yarn/releases
 !.yarn/versions
 
+#.env.localを追加
+/.env.local
+
 # testing
 /coverage
 
@@ -39,3 +42,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+/e2e/.auth/
+
+
+
+

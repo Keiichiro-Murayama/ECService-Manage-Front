@@ -1,0 +1,323 @@
+import { ProductDetail } from "@/models/ProductDetail";
+
+import type { IProductRepository } from "../interfaces/IProductRepository";
+import type { Product } from "../models/Product";
+import type { ProductRegisterRequest } from "../models/ProductRegisterRequest";
+import type { ProductUpdateRequest } from "../models/ProductUpdateRequest";
+
+import { injectable } from "inversify";
+
+/**
+ * ProductRepositoryクラスは、
+ * IProductRepositoryインターフェースを実装し、
+ * 商品に関するデータ操作を行うリポジトリクラスです。
+ */
+@injectable()
+export class ProductRepository implements IProductRepository {
+  /** 商品APIのエンドポイント */
+  private readonly endpoint: string = "/proxy-api/products";
+  /** 商品画像APIのエンドポイント */
+  private readonly imageEndpoint: string = "/proxy-api/product-images"; //石原:追加
+
+  /**
+   * 商品を検索する
+   *
+   * @param categoryUuid 商品カテゴリUuid
+   * @returns 商品の配列
+   */
+  async searchProducts(
+    categoryUuid?: string,
+  ): Promise<Product[]> {
+    const url = categoryUuid
+      ? `${this.endpoint}?categoryUuid=${encodeURIComponent(
+        categoryUuid,
+      )}`
+      : this.endpoint;
+
+    const response = await fetch(url, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品の検索に失敗しました。(status : ${response.status})`,
+      );
+    }
+
+    const data: unknown = await response.json();
+
+    if (!Array.isArray(data)) {
+      console.error(
+        "商品検索APIのレスポンス:",
+        data,
+      );
+
+      throw new Error(
+        "商品検索APIのレスポンス形式が不正です。",
+      );
+    }
+
+    return data as Product[];
+  }
+
+  /**
+   * 商品詳細を取得する
+   *
+   * @param productUuid 商品Uuid
+   * @returns 商品詳細
+   */
+  async getProductDetail(
+    productUuid: string,
+  ): Promise<ProductDetail> {
+    const url =
+      `${this.endpoint}/info` +
+      `?productUuid=${encodeURIComponent(
+        productUuid,
+      )}`;
+
+    const response = await fetch(url, {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品の詳細取得に失敗しました。(status : ${response.status})`,
+      );
+    }
+
+    const data: ProductDetail =
+      await response.json();
+
+    return data;
+  }
+
+  /**
+   * 商品画像を含む新しい商品を追加する
+   *
+   * @param newProduct 新しい商品の情報
+   */
+  async addProduct(
+    newProduct: ProductRegisterRequest,
+  ): Promise<void> {
+    const formData = new FormData(); //石原:変更 商品情報と画像をmultipart/form-dataで送信する
+
+    formData.append(
+      "productName",
+      newProduct.productName,
+    ); //石原:変更 商品名をフォームデータへ追加する
+
+    formData.append(
+      "price",
+      String(newProduct.price),
+    ); //石原:変更 価格を文字列へ変換してフォームデータへ追加する
+
+    formData.append(
+      "stock",
+      String(newProduct.stock),
+    ); //石原:変更 在庫数を文字列へ変換してフォームデータへ追加する
+
+    formData.append(
+      "categoryUuid",
+      newProduct.categoryUuid,
+    ); //石原:変更 カテゴリUUIDをフォームデータへ追加する
+
+    formData.append(
+      "image",
+      newProduct.image,
+    ); //石原:変更 選択した画像ファイルをフォームデータへ追加する
+
+    const response = await fetch(
+      this.endpoint,
+      {
+        method: "POST",
+        body: formData, //石原:変更 JSONではなくフォームデータを送信する
+        credentials: "include",
+      },
+    );
+
+    if (!response.ok) {
+      let message =
+        `商品の登録に失敗しました。` +
+        `(status : ${response.status})`;
+
+      try {
+        const errorResponse: unknown =
+          await response.json();
+
+        if (
+          typeof errorResponse === "object" &&
+          errorResponse !== null &&
+          "message" in errorResponse &&
+          typeof errorResponse.message ===
+          "string"
+        ) {
+          message = errorResponse.message;
+        }
+      } catch {
+        // JSON形式でない場合は既定のメッセージを使用する
+      }
+
+      throw new Error(message);
+    }
+  }
+
+  /**
+ * 商品画像をアップロードする
+ *
+ * @param productName 商品名
+ * @param image 商品画像
+ * @returns アップロードした画像URL
+ */
+  async uploadProductImage(
+    productName: string,
+    image: File,
+  ): Promise<string> {
+    const formData = new FormData();
+
+    formData.append(
+      "productName",
+      productName,
+    );
+
+    formData.append(
+      "image",
+      image,
+    );
+
+    const response = await fetch(
+      this.imageEndpoint,
+      {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      },
+    );
+
+    if (!response.ok) {
+      let message =
+        `商品画像のアップロードに失敗しました。` +
+        `(status : ${response.status})`;
+
+      try {
+        const errorResponse: unknown =
+          await response.json();
+
+        if (
+          typeof errorResponse === "object" &&
+          errorResponse !== null &&
+          "message" in errorResponse &&
+          typeof errorResponse.message ===
+          "string"
+        ) {
+          message = errorResponse.message;
+        }
+      } catch {
+        // JSON以外の場合は既定メッセージを使う
+      }
+
+      throw new Error(message);
+    }
+
+    const data: unknown =
+      await response.json();
+
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      !("imageUrl" in data) ||
+      typeof data.imageUrl !== "string" ||
+      data.imageUrl.trim() === ""
+    ) {
+      throw new Error(
+        "商品画像APIのレスポンス形式が不正です。",
+      );
+    }
+
+    return data.imageUrl;
+  }
+
+  /**
+   * 商品画像を削除する
+   *
+   * @param imageUrl 削除する画像URL
+   */
+  async deleteProductImage(
+    imageUrl: string,
+  ): Promise<void> {
+    const url =
+      `${this.imageEndpoint}` +
+      `?imageUrl=${encodeURIComponent(
+        imageUrl,
+      )}`;
+
+    const response = await fetch(url, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品画像の削除に失敗しました。` +
+        `(status : ${response.status})`,
+      );
+    }
+  }
+
+
+  /**
+   * 商品情報を更新する
+   *
+   * @param productUuid 商品Uuid
+   * @param updatedProduct 更新する商品情報
+   */
+  async updateProduct(
+    productUuid: string,
+    updatedProduct: ProductUpdateRequest,
+  ): Promise<void> {
+    const url =
+      `${this.endpoint}/update` +
+      `?productUuid=${encodeURIComponent(
+        productUuid,
+      )}`;
+
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(
+        updatedProduct,
+      ),
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品の更新に失敗しました。(status : ${response.status})`,
+      );
+    }
+  }
+
+  /**
+   * 商品を削除する
+   *
+   * @param productUuid 商品Uuid
+   */
+  async deleteProduct(
+    productUuid: string,
+  ): Promise<void> {
+    const url =
+      `${this.endpoint}/${encodeURIComponent(productUuid)}`;
+
+    const response = await fetch(url, {
+      method: "DELETE",
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `商品の削除に失敗しました。(status : ${response.status})`,
+      );
+    }
+  }
+}

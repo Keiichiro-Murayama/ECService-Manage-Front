@@ -1,0 +1,372 @@
+<mxfile host="65bd71144e">
+    <diagram id="a6ANM9bixiXOZ2RQBhcy" name="ページ1">
+        <mxGraphModel dx="4420" dy="2113" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="141" value="BP006 商品検索画面 シーケンス図（管理者側フロントエンド）" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="300" y="25" width="1500" height="45" as="geometry"/>
+                </mxCell>
+                <mxCell id="142" value="担当者" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontSize=15;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="80" y="105" width="80" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="143" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="175" as="sourcePoint"/>
+                        <mxPoint x="120" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="144" value="ProductSearchPage" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="275" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="145" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="380" y="175" as="sourcePoint"/>
+                        <mxPoint x="380" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="146" value="ProductSearch" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="545" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="147" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="175" as="sourcePoint"/>
+                        <mxPoint x="650" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="148" value="useProductSearch" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="815" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="149" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="175" as="sourcePoint"/>
+                        <mxPoint x="920" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="150" value="SearchProductsService" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="1105" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="151" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="175" as="sourcePoint"/>
+                        <mxPoint x="1210" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="152" value="CategoryRepository" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="1395" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1500" y="175" as="sourcePoint"/>
+                        <mxPoint x="1500" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="154" value="ProductRepository" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="1655" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="155" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1760" y="175" as="sourcePoint"/>
+                        <mxPoint x="1760" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="156" value="管理者側Web API" style="rounded=0;whiteSpace=wrap;html=1;fontSize=14;fontStyle=1;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="1895" y="105" width="210" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" value="" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=1;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2000" y="175" as="sourcePoint"/>
+                        <mxPoint x="2000" y="2460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="158" value="初期表示" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=0;fontSize=17;fontStyle=1;align=left;verticalAlign=top;spacingTop=6;spacingLeft=8;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="200" width="2020" height="780" as="geometry"/>
+                </mxCell>
+                <mxCell id="159" value="カテゴリ検索" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=0;fontSize=17;fontStyle=1;align=left;verticalAlign=top;spacingTop=6;spacingLeft=8;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="1010" width="2020" height="820" as="geometry"/>
+                </mxCell>
+                <mxCell id="160" value="画面遷移" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=0;fontSize=17;fontStyle=1;align=left;verticalAlign=top;spacingTop=6;spacingLeft=8;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="1860" width="2020" height="520" as="geometry"/>
+                </mxCell>
+                <mxCell id="161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="373" y="230" width="14" height="700" as="geometry"/>
+                </mxCell>
+                <mxCell id="162" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="643" y="270" width="14" height="650" as="geometry"/>
+                </mxCell>
+                <mxCell id="163" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="913" y="315" width="14" height="590" as="geometry"/>
+                </mxCell>
+                <mxCell id="164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1203" y="360" width="14" height="450" as="geometry"/>
+                </mxCell>
+                <mxCell id="165" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1493" y="410" width="14" height="145" as="geometry"/>
+                </mxCell>
+                <mxCell id="166" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1753" y="590" width="14" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="167" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="643" y="1060" width="14" height="680" as="geometry"/>
+                </mxCell>
+                <mxCell id="168" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="913" y="1130" width="14" height="600" as="geometry"/>
+                </mxCell>
+                <mxCell id="169" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1203" y="1210" width="14" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="170" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1753" y="1280" width="14" height="180" as="geometry"/>
+                </mxCell>
+                <mxCell id="171" value="商品検索画面を開く()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="235" as="sourcePoint"/>
+                        <mxPoint x="380" y="235" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="172" value="商品検索画面を表示する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="380" y="280" as="sourcePoint"/>
+                        <mxPoint x="650" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="173" value="商品検索機能を初期化する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="325" as="sourcePoint"/>
+                        <mxPoint x="920" y="325" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="174" value="初期表示データを取得する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="370" as="sourcePoint"/>
+                        <mxPoint x="1210" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="175" value="カテゴリ一覧を取得する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="420" as="sourcePoint"/>
+                        <mxPoint x="1500" y="420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="176" value="カテゴリ一覧取得APIを呼び出す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1500" y="465" as="sourcePoint"/>
+                        <mxPoint x="2000" y="465" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="177" value="カテゴリ一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2000" y="510" as="sourcePoint"/>
+                        <mxPoint x="1500" y="510" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="178" value="カテゴリ一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1500" y="555" as="sourcePoint"/>
+                        <mxPoint x="1210" y="555" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="179" value="全商品を検索する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="600" as="sourcePoint"/>
+                        <mxPoint x="1760" y="600" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="180" value="商品一覧取得APIを呼び出す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1760" y="645" as="sourcePoint"/>
+                        <mxPoint x="2000" y="645" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="181" value="商品一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2000" y="690" as="sourcePoint"/>
+                        <mxPoint x="1760" y="690" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="182" value="商品一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1760" y="735" as="sourcePoint"/>
+                        <mxPoint x="1210" y="735" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="183" value="カテゴリ一覧と商品一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="780" as="sourcePoint"/>
+                        <mxPoint x="920" y="780" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="184" value="取得したデータを画面状態に保存する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="825" as="sourcePoint"/>
+                        <mxPoint x="920" y="855" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="990" y="825"/>
+                            <mxPoint x="990" y="855"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="185" value="カテゴリ一覧と商品一覧を渡す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="885" as="sourcePoint"/>
+                        <mxPoint x="650" y="885" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="186" value="商品検索画面を表示する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="930" as="sourcePoint"/>
+                        <mxPoint x="120" y="930" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="187" value="商品カテゴリを選択する(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="1065" as="sourcePoint"/>
+                        <mxPoint x="650" y="1065" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="188" value="選択カテゴリを設定する(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1115" as="sourcePoint"/>
+                        <mxPoint x="920" y="1115" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="189" value="検索ボタンを押す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="1170" as="sourcePoint"/>
+                        <mxPoint x="650" y="1170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="190" value="商品を検索する(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1220" as="sourcePoint"/>
+                        <mxPoint x="920" y="1220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="191" value="カテゴリ別商品を検索する(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="1270" as="sourcePoint"/>
+                        <mxPoint x="1210" y="1270" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="192" value="カテゴリ別商品を検索する(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="1320" as="sourcePoint"/>
+                        <mxPoint x="1760" y="1320" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="193" value="商品検索APIを呼び出す(categoryUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1760" y="1370" as="sourcePoint"/>
+                        <mxPoint x="2000" y="1370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="194" value="検索結果を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2000" y="1420" as="sourcePoint"/>
+                        <mxPoint x="1760" y="1420" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="195" value="商品一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1760" y="1470" as="sourcePoint"/>
+                        <mxPoint x="1210" y="1470" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="196" value="商品一覧を返す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1210" y="1520" as="sourcePoint"/>
+                        <mxPoint x="920" y="1520" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="197" value="商品一覧を画面状態に保存する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="1565" as="sourcePoint"/>
+                        <mxPoint x="920" y="1595" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="990" y="1565"/>
+                            <mxPoint x="990" y="1595"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="198" value="検索結果を渡す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="920" y="1625" as="sourcePoint"/>
+                        <mxPoint x="650" y="1625" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="199" value="alt 検索結果" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontSize=14;fontStyle=1;align=left;verticalAlign=top;spacingTop=5;spacingLeft=7;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="485" y="1640" width="1450" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="200" value="" style="shape=line;html=1;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="1700" width="1450" height="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="201" value="" style="shape=line;html=1;strokeWidth=1;" vertex="1" parent="1">
+                    <mxGeometry x="500" y="1750" width="1450" height="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="202" value="[商品が1件以上]" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=2;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="1665" width="160" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="203" value="[商品が0件]" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=2;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="1715" width="140" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="204" value="[APIエラー]" style="text;html=1;align=left;verticalAlign=middle;fontSize=13;fontStyle=2;fontFamily=Noto Sans CJK JP;" vertex="1" parent="1">
+                    <mxGeometry x="520" y="1765" width="140" height="24" as="geometry"/>
+                </mxCell>
+                <mxCell id="205" value="検索結果を一覧表示する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1685" as="sourcePoint"/>
+                        <mxPoint x="120" y="1685" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="206" value="「該当する商品情報がありません」を表示する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1735" as="sourcePoint"/>
+                        <mxPoint x="120" y="1735" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="207" value="商品情報取得エラーを表示する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;dashPattern=8 4;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1785" as="sourcePoint"/>
+                        <mxPoint x="120" y="1785" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="208" value="商品追加ボタンを押す()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="1910" as="sourcePoint"/>
+                        <mxPoint x="650" y="1910" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="209" value="商品追加画面へ遷移する()" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="1960" as="sourcePoint"/>
+                        <mxPoint x="380" y="1960" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="210" value="修正ボタンを押す(productUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="2040" as="sourcePoint"/>
+                        <mxPoint x="650" y="2040" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="211" value="商品修正画面へ遷移する(productUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="2090" as="sourcePoint"/>
+                        <mxPoint x="380" y="2090" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="212" value="削除ボタンを押す(productUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="120" y="2170" as="sourcePoint"/>
+                        <mxPoint x="650" y="2170" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="213" value="商品削除確認画面へ遷移する(productUuid)" style="edgeStyle=none;orthogonalLoop=0;jettySize=auto;html=1;endArrow=block;endFill=1;rounded=0;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="650" y="2220" as="sourcePoint"/>
+                        <mxPoint x="380" y="2220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
