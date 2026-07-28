@@ -13,7 +13,7 @@ import type { IDeleteProductService } from "@/interfaces/IDeleteProductService";
 import { IRegisterProductService } from "@/interfaces/IRegisterProductService";
 import type { IOrderRepository } from "@/interfaces/IOrderRepository";
 import type { ISearchOrderHistoriesService } from "@/interfaces/ISearchOrderHistoriesService";
-
+import type { IUpdateProductService } from "@/interfaces/IUpdateProductService"; 
 // 実装クラス
 import { EmployeeRepository } from "@/infrastructures/EmployeeRepositoy";
 import { RegisterEmployeeAccountService } from "@/services/RegisterEmployeeAccountService";
@@ -25,6 +25,7 @@ import { DeleteProductService } from "@/services/DeleteProductService";
 import { RegisterProductService } from "@/services/RegisterProductService";
 import { OrderRepository } from "@/infrastructures/OrderRepository";
 import { SearchOrderHistoriesService } from "@/services/SearchOrderHistoriesService";
+import { UpdateProductService } from "@/services/UpdateProductService";
 /**
  * データアクセスとサービスを実装する
  * DIコンテナの初期化と依存関係の登録
@@ -53,6 +54,7 @@ container.bind<IDeleteProductService>(TYPES.IDeleteProductService).to(DeleteProd
 container.bind<IRegisterCategoryService>(TYPES.IRegisterCategoryService).to(RegisterCategoryService);
 container.bind<IRegisterProductService>(TYPES.IRegisterProductService,).to(RegisterProductService);
 container.bind<ISearchOrderHistoriesService>(TYPES.ISearchOrderHistoriesService,).to(SearchOrderHistoriesService);
+container.bind<IUpdateProductService>(TYPES.IUpdateProductService,).to(UpdateProductService);
 
 
 export { container };
