@@ -49,8 +49,8 @@ export function useLogin() {
   };
 
   return {
-    accountName,
-    setAccountName,
+    username,
+    setUsername,
     password,
     setPassword,
     submitting,
