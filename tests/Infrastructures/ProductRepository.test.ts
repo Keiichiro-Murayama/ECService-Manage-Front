@@ -517,15 +517,13 @@ describe("ProductRepository", () => {
             );
 
 
-            expect(fetch)
-                .toHaveBeenCalledWith(
-                    "/proxy-api/products/delete?productUuid=001",
-                    {
-                        method: "DELETE",
-                        credentials: "include",
-                    },
-                );
-
+            expect(fetch).toHaveBeenCalledWith(
+                "/proxy-api/products/001",
+                {
+                    credentials: "include",
+                    method: "DELETE",
+                },
+            );
 
         });
 
