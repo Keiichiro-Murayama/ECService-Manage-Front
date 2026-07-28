@@ -47,16 +47,34 @@ jobs:
           host: ${{ secrets.ECSERVICE_AZURE_HOST }}
           username: ${{ secrets.ECSERVICE_AZURE_USER }}
           key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
-          source: "app,components,di,hooks,infrastructures,schemas,interfaces,lib,models,public,services,middleware.ts,next.config.ts,next-env.d.ts,package.json,package-lock.json,postcss.config.mjs,tsconfig.json"
+          source: |
+            app
+            components
+            di
+            hooks
+            infrastructures
+            schemas
+            interfaces
+            lib
+            models
+            public
+            services
+            middleware.ts
+            next.config.ts
+            next-env.d.ts
+            package.json
+            package-lock.json
+            postcss.config.mjs
+            tsconfig.json
           target: "/var/www/ecservice-manage-front"
           overwrite: true
 
       - name: Next.jsをビルドして起動
         uses: appleboy/ssh-action@v1
         env:
-         SERVICE_USER: ${{ secrets.ECSERVICE_AZURE_USER }}
-         NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-         NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          SERVICE_USER: ${{ secrets.ECSERVICE_AZURE_USER }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
         with:
           host: ${{ secrets.ECSERVICE_AZURE_HOST }}
           username: ${{ secrets.ECSERVICE_AZURE_USER }}
@@ -106,7 +124,7 @@ jobs:
             echo "=== Frontend service status ==="
 
             sudo systemctl --no-pager --full status ecservice-manage-front.service
-  
+
             echo "=== Local frontend check ==="
 
             sleep 5
