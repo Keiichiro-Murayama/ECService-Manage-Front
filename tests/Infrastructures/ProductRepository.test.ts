@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 import { ProductRepository } from "@/infrastructures/ProductRepository";
-
+import { ProductRegisterRequest } from "@/models/ProductRegisterRequest";
+import { ProductUpdateRequest } from "@/models/ProductUpdateRequest";
 
 describe("ProductRepository", () => {
 
@@ -343,7 +344,7 @@ describe("ProductRepository", () => {
             );
 
 
-            const request: any = {
+            const request: ProductRegisterRequest = {
                 productName: "商品A",
                 price: 1000,
                 stock: 10,
@@ -353,7 +354,6 @@ describe("ProductRepository", () => {
                     "test.png",
                 ),
             };
-
 
             await expect(
                 repository.addProduct(request),
@@ -386,7 +386,7 @@ describe("ProductRepository", () => {
             );
 
 
-            const request: any = {
+            const request: ProductRegisterRequest = {
                 productName: "商品A",
                 price: 1000,
                 stock: 10,
@@ -396,7 +396,6 @@ describe("ProductRepository", () => {
                     "test.png",
                 ),
             };
-
 
             await expect(
                 repository.addProduct(request),
@@ -462,8 +461,6 @@ describe("ProductRepository", () => {
 
 
         it("商品更新失敗時エラーになる", async () => {
-
-
             vi.stubGlobal(
                 "fetch",
                 vi.fn().mockResolvedValue({
@@ -472,18 +469,25 @@ describe("ProductRepository", () => {
                 }),
             );
 
+            const request: ProductUpdateRequest = {
+                productUuid: "001",
+                productName: "商品A",
+                price: 1000,
+                stock: 10,
+                categoryUuid: "001",
+                imageUrl: "test.png",
+            };
 
             await expect(
                 repository.updateProduct(
                     "001",
-                    {} as any,
+                    request,
                 ),
             )
                 .rejects
                 .toThrow(
                     "商品の更新に失敗しました。(status : 500)",
                 );
-
         });
 
 

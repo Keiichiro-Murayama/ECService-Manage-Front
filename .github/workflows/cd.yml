@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.workflow_run.head_sha }}
-                - name: VMのデプロイ先を準備
+      - name: VMのデプロイ先を準備
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.ECSERVICE_AZURE_HOST }}
