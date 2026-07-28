@@ -54,13 +54,14 @@ jobs:
       - name: Next.jsをビルドして起動
         uses: appleboy/ssh-action@v1
         env:
-          SERVICE_USER: ${{ secrets.ECSERVICE_AZURE_USER }}
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+         SERVICE_USER: ${{ secrets.ECSERVICE_AZURE_USER }}
+         NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+         NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
         with:
           host: ${{ secrets.ECSERVICE_AZURE_HOST }}
           username: ${{ secrets.ECSERVICE_AZURE_USER }}
           key: ${{ secrets.ECSERVICE_AZURE_SECRET }}
-          envs: SERVICENEXTAUTH_SECRET_USER,
+          envs: SERVICE_USER,NEXTAUTH_SECRET,NEXTAUTH_URL
           script: |
             set -e
 
@@ -90,6 +91,7 @@ jobs:
             Environment=NODE_ENV=production
             Environment=PORT=3000
             Environment=NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
+            Environment=NEXTAUTH_URL=${NEXTAUTH_URL}
 
             [Install]
             WantedBy=multi-user.target
@@ -104,7 +106,7 @@ jobs:
             echo "=== Frontend service status ==="
 
             sudo systemctl --no-pager --full status ecservice-manage-front.service
-
+  
             echo "=== Local frontend check ==="
 
             sleep 5
