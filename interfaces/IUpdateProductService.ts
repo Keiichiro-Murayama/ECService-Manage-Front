@@ -5,22 +5,17 @@ import type { ProductUpdateRequest } from "@/models/ProductUpdateRequest";
 /**
  * 商品修正画面の初期表示データ
  */
-export type UpdateProductInitialData = {
-  /** 修正対象の商品情報 */
+export interface UpdateProductInitialData {
   product: ProductDetail;
-
-  /** 商品カテゴリ一覧 */
   categories: Category[];
-};
+}
 
 /**
- * 商品修正サービスのインターフェース
+ * 商品修正サービス
  */
 export interface IUpdateProductService {
   /**
-   * 商品修正画面の初期表示データを取得する
-   *
-   * @param productUuid 商品UUID
+   * 商品情報とカテゴリ一覧を取得する
    */
   getInitialData(
     productUuid: string,
@@ -28,12 +23,10 @@ export interface IUpdateProductService {
 
   /**
    * 商品情報を更新する
-   *
-   * @param productUuid 商品UUID
-   * @param product 更新する商品情報
    */
   update(
     productUuid: string,
     product: ProductUpdateRequest,
+    newImage: File | null,
   ): Promise<void>;
 }
