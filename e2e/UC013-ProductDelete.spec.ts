@@ -64,9 +64,7 @@ test.describe("BP007 商品削除機能のE2Eテスト", () => {
     await page.getByRole("button", { name: "削除" }).click();
 
     // ローディング終了待ち
-    await expect(
-      page.getByText("削除しています...")
-    ).toBeHidden();
+await expect(page).toHaveURL(/\/admin\/product\/delete\/complete$/);
 
     // 完了画面
     await expect(
