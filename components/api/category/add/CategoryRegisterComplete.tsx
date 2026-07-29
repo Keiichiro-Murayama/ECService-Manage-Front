@@ -1,49 +1,91 @@
 "use client";
 
+import {
+  CheckCircle2,
+} from "lucide-react";
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type Props = {
-    categoryName: string;
-    onClose: () => void;
-    onRegisterMore: () => void;
+  /** 登録したカテゴリ名 */
+  categoryName: string;
+
+  /** ホームへ戻る */
+  onClose: () => void;
+
+  /** 続けてカテゴリを登録する */
+  onRegisterMore: () => void;
 };
 
+/**
+ * 商品カテゴリ登録完了画面
+ */
 export const CategoryRegisterComplete = ({
-    categoryName,
-    onClose,
-    onRegisterMore,
+  categoryName,
+  onClose,
+  onRegisterMore,
 }: Props) => {
-    return (
-        <div className="flex flex-col items-center py-10">
-            <h1 className="mb-6 text-3xl font-bold">
-                商品カテゴリ登録完了
-            </h1>
+  return (
+    <main className="mx-auto w-full max-w-3xl p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">
+            商品カテゴリ登録完了
+          </CardTitle>
+        </CardHeader>
 
-            <p className="mb-8">
-                以下のカテゴリを登録しました。
-            </p>
+        <CardContent className="space-y-6">
+          <Alert>
+            <CheckCircle2 />
 
-            <div className="mb-8 grid grid-cols-[140px_1fr] gap-x-6 gap-y-3 text-xl">
-                <p className="text-right">カテゴリ名</p>
-                <p>{categoryName}</p>
-            </div>
+            <AlertTitle>
+              商品カテゴリを登録しました
+            </AlertTitle>
 
-            <div className="flex gap-3">
-                <Button
-                    className="w-48"
-                    variant="outline"
-                    onClick={onRegisterMore}
-                >
-                    さらにカテゴリを登録
-                </Button>
+            <AlertDescription>
+              商品カテゴリの登録が完了しました。
+            </AlertDescription>
+          </Alert>
 
-                <Button
-                    className="w-48"
-                    onClick={onClose}
-                >
-                    ホームへ戻る
-                </Button>
-            </div>
-        </div>
-    );
+          <dl className="grid grid-cols-1 gap-4 rounded-md border p-4 sm:grid-cols-[160px_1fr] sm:gap-x-6">
+            <dt className="font-semibold">
+              カテゴリ名
+            </dt>
+
+            <dd className="break-words">
+              {categoryName}
+            </dd>
+          </dl>
+
+          <div className="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onRegisterMore}
+            >
+              続けて登録
+            </Button>
+
+            <Button
+              type="button"
+              onClick={onClose}
+            >
+              ホームへ戻る
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </main>
+  );
 };

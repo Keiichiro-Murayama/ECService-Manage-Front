@@ -1,27 +1,29 @@
-import type { DefaultSession } from "next-auth";
+import type {
+  DefaultSession,
+} from "next-auth";
 
 declare module "next-auth" {
-    interface Session {
-        user: {
-            accessToken: string;
-            accountUuid: string;
-            accountName: string;
-        } & DefaultSession["user"];
-    }
+  interface Session {
+    user: DefaultSession["user"] & {
+      token?: string;
+      accountUuid?: string;
+      accountName?: string;
 
-    interface User {
-        accessToken: string;
-        accountUuid: string;
-        accountName: string;
-    }
+      //石原:追加
+      employeeName?: string;
+
+      message?: string;
+    };
+  }
+
+  interface User {
+    token?: string;
+    accountUuid?: string;
+    accountName?: string;
+
+    //石原:追加
+    employeeName?: string;
+
+    message?: string;
+  }
 }
-
-declare module "next-auth/jwt" {
-    interface JWT {
-        accessToken: string;
-        accountUuid: string;
-        accountName: string;
-    }
-}
-
-export { };

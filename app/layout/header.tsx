@@ -17,7 +17,7 @@ import {
 import {
   PencilRuler,
   UserRound,
-} from "lucide-react"; 
+} from "lucide-react";
 
 import { useLogout } from "@/hooks/auth/useLogout";
 
@@ -122,11 +122,11 @@ export default function Header({
   } = useSession(); //石原:追加
 
   /*
-   * ログイン中のアカウント名
-   */
-  const accountName =
-    session?.user?.accountName?.trim() ??
-    ""; //石原:追加
+  * ログイン中の社員氏名
+  */
+  const employeeName =
+    session?.user?.employeeName?.trim() ??
+    "";
 
   return (
     <header className="flex items-center justify-between border-b-3 border-b-primary py-4 text-primary">
@@ -174,20 +174,19 @@ export default function Header({
       {showControls && (
         <div className="flex items-center gap-3 px-4">
           {status === "authenticated" &&
-            accountName !== "" && (
+            employeeName !== "" && (
               <div className="flex max-w-56 items-center gap-1.5">
                 <UserRound className="size-4 shrink-0" />
 
                 <span
                   className="truncate text-sm font-medium"
-                  title={accountName}
+                  title={employeeName}
                 >
                   ログイン中：
-                  {accountName}
+                  {employeeName}
                 </span>
               </div>
             )}
-
           <button
             type="button"
             className="rounded-md bg-secondary px-2 py-1 font-bold text-secondary-foreground hover:bg-secondary/80 hover:text-secondary-foreground/80"

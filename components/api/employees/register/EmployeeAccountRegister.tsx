@@ -11,7 +11,17 @@ import {
   LoaderCircle,
 } from "lucide-react";
 
+import {
+  Alert,
+  AlertDescription,
+} from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -25,8 +35,8 @@ import {
 
 import { useRegisterEmployeeAccount } from "@/hooks/useRegisterEmployeeAccount";
 
-import { EmployeeAccountRegisterConfirm } from "./EmployeeAccountRegisterConfirm";
 import EmployeeAccountRegisterComplete from "./EmployeeAccountRegisterComplete";
+import { EmployeeAccountRegisterConfirm } from "./EmployeeAccountRegisterConfirm";
 
 /**
  * 担当者アカウント登録画面
@@ -58,18 +68,17 @@ export const EmployeeAccountRegister = () => {
   } = useRegisterEmployeeAccount();
 
   /**
-   * 入力フォーム送信
+   * 入力フォームを送信する
    */
   const onSubmit = (
-    event:
-      FormEvent<HTMLFormElement>,
+    event: FormEvent<HTMLFormElement>,
   ): void => {
     event.preventDefault();
     handleConfirm();
   };
 
   /**
-   * 確認画面
+   * 登録確認画面
    */
   if (step === "confirm") {
     return (
@@ -78,9 +87,7 @@ export const EmployeeAccountRegister = () => {
           selectedEmployee?.employeeName ??
           ""
         }
-        accountName={
-          formData.accountName
-        }
+        accountName={formData.accountName}
         password={formData.password}
         isLoading={isLoading}
         onBack={handleBack}
@@ -93,10 +100,7 @@ export const EmployeeAccountRegister = () => {
   }
 
   /**
-   * 完了画面
-   *
-   * employeesから再検索せず、
-   * 登録成功時に保存した氏名を使用する。
+   * 登録完了画面
    */
   if (step === "complete") {
     return (
@@ -107,9 +111,7 @@ export const EmployeeAccountRegister = () => {
         accountName={
           registeredAccountName
         }
-        onRegisterAnother={
-          resetForm
-        }
+        onRegisterAnother={resetForm}
         onClose={() =>
           router.push("/")
         }
@@ -118,214 +120,211 @@ export const EmployeeAccountRegister = () => {
   }
 
   /**
-   * 入力画面
+   * 登録入力画面
    */
   return (
-    <div className="container mx-auto max-w-lg py-10">
-      <h1 className="mb-6 text-2xl font-bold">
-        アカウント新規登録
-      </h1>
+    <main className="mx-auto w-full max-w-3xl p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">
+            アカウント新規登録
+          </CardTitle>
+        </CardHeader>
 
-      {isInitializing && (
-        <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
-          <LoaderCircle className="size-4 animate-spin" />
+        <CardContent>
+          {isInitializing && (
+            <div className="mb-6 flex items-center gap-2 text-sm text-muted-foreground">
+              <LoaderCircle className="size-4 animate-spin" />
 
-          <span>
-            未登録社員一覧を読み込んでいます。
-          </span>
-        </div>
-      )}
+              <span>
+                未登録社員一覧を読み込んでいます。
+              </span>
+            </div>
+          )}
 
-      {errors.system && (
-        <div className="mb-6 space-y-3">
-          <div className="flex items-center gap-1 text-sm text-red-500">
-            <CircleAlert className="h-4 w-4" />
-
-            <span>
-              {errors.system}
-            </span>
-          </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              void loadUnregisteredEmployees();
-            }}
-            disabled={isLoading}
-          >
-            再読み込み
-          </Button>
-        </div>
-      )}
-
-      <form
-        onSubmit={onSubmit}
-        className="space-y-6"
-        noValidate
-      >
-        {/* 社員選択 */}
-        <div className="space-y-2">
-          <Label htmlFor="employeeUuid">
-            社員名
-          </Label>
-
-          <Select
-            value={
-              formData.employeeUuid
-            }
-            onValueChange={
-              handleEmployeeChange
-            }
-            disabled={isLoading}
-          >
-            <SelectTrigger
-              id="employeeUuid"
-              className={
-                errors.employeeUuid
-                  ? "border-red-500"
-                  : ""
-              }
+          {errors.system && (
+            <Alert
+              variant="destructive"
+              className="mb-6"
             >
-              <SelectValue placeholder="社員を選択してください" />
-            </SelectTrigger>
+              <CircleAlert />
 
-            <SelectContent>
-              {employees.map(
-                (employee) => (
-                  <SelectItem
-                    key={
-                      employee.employeeUuid
-                    }
-                    value={
-                      employee.employeeUuid
-                    }
+              <AlertDescription>
+                <div className="space-y-3">
+                  <p>
+                    {errors.system}
+                  </p>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      void loadUnregisteredEmployees();
+                    }}
+                    disabled={isLoading}
                   >
-                    {
-                      employee.employeeName
-                    }
-                  </SelectItem>
-                ),
+                    再読み込み
+                  </Button>
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          <form
+            onSubmit={onSubmit}
+            className="space-y-6"
+            noValidate
+          >
+            <div className="space-y-2">
+              <Label htmlFor="employeeUuid">
+                社員名
+              </Label>
+
+              <Select
+                value={formData.employeeUuid}
+                onValueChange={
+                  handleEmployeeChange
+                }
+                disabled={isLoading}
+              >
+                <SelectTrigger
+                  id="employeeUuid"
+                  aria-invalid={
+                    errors.employeeUuid !==
+                    undefined
+                  }
+                >
+                  <SelectValue placeholder="社員を選択してください" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  {employees.map(
+                    (employee) => (
+                      <SelectItem
+                        key={
+                          employee.employeeUuid
+                        }
+                        value={
+                          employee.employeeUuid
+                        }
+                      >
+                        {
+                          employee.employeeName
+                        }
+                      </SelectItem>
+                    ),
+                  )}
+                </SelectContent>
+              </Select>
+
+              {errors.employeeUuid && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <CircleAlert className="h-4 w-4" />
+
+                  <span>
+                    {errors.employeeUuid}
+                  </span>
+                </div>
               )}
-            </SelectContent>
-          </Select>
-
-          {errors.employeeUuid && (
-            <div className="flex items-center gap-1 text-sm text-red-500">
-              <CircleAlert className="h-4 w-4" />
-
-              <span>
-                {errors.employeeUuid}
-              </span>
             </div>
-          )}
-        </div>
 
-        {/* アカウント名 */}
-        <div className="space-y-2">
-          <Label htmlFor="accountName">
-            アカウント名
-          </Label>
+            <div className="space-y-2">
+              <Label htmlFor="accountName">
+                アカウント名
+              </Label>
 
-          <Input
-            id="accountName"
-            name="accountName"
-            type="text"
-            value={
-              formData.accountName
-            }
-            onChange={handleChange}
-            placeholder="例：account01"
-            autoComplete="off"
-            disabled={isLoading}
-            className={
-              errors.accountName
-                ? "border-red-500"
-                : ""
-            }
-          />
+              <Input
+                id="accountName"
+                name="accountName"
+                type="text"
+                value={formData.accountName}
+                onChange={handleChange}
+                placeholder="例：account01"
+                autoComplete="off"
+                disabled={isLoading}
+                aria-invalid={
+                  errors.accountName !==
+                  undefined
+                }
+              />
 
-          {errors.accountName && (
-            <div className="flex items-center gap-1 text-sm text-red-500">
-              <CircleAlert className="h-4 w-4" />
+              {errors.accountName && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <CircleAlert className="h-4 w-4" />
 
-              <span>
-                {errors.accountName}
-              </span>
+                  <span>
+                    {errors.accountName}
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* パスワード */}
-        <div className="space-y-2">
-          <Label htmlFor="password">
-            パスワード
-          </Label>
+            <div className="space-y-2">
+              <Label htmlFor="password">
+                パスワード
+              </Label>
 
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            value={
-              formData.password
-            }
-            onChange={handleChange}
-            placeholder="半角英数字5～20文字"
-            autoComplete="new-password"
-            disabled={isLoading}
-            className={
-              errors.password
-                ? "border-red-500"
-                : ""
-            }
-          />
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="半角英数字5～20文字"
+                autoComplete="new-password"
+                disabled={isLoading}
+                aria-invalid={
+                  errors.password !==
+                  undefined
+                }
+              />
 
-          {errors.password && (
-            <div className="flex items-center gap-1 text-sm text-red-500">
-              <CircleAlert className="h-4 w-4" />
+              {errors.password && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <CircleAlert className="h-4 w-4" />
 
-              <span>
-                {errors.password}
-              </span>
+                  <span>
+                    {errors.password}
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        {/* 登録APIエラー */}
-        {errors.submit && (
-          <div className="flex items-center gap-1 text-sm text-red-500">
-            <CircleAlert className="h-4 w-4" />
+            {errors.submit && (
+              <Alert variant="destructive">
+                <CircleAlert />
 
-            <span>
-              {errors.submit}
-            </span>
-          </div>
-        )}
+                <AlertDescription>
+                  {errors.submit}
+                </AlertDescription>
+              </Alert>
+            )}
 
-        <div className="flex justify-end gap-3 pt-4">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() =>
-              router.push("/")
-            }
-            disabled={isLoading}
-          >
-            キャンセル
-          </Button>
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() =>
+                  router.push("/")
+                }
+                disabled={isLoading}
+              >
+                キャンセル
+              </Button>
 
-          <Button
-            type="submit"
-            className="w-48"
-            disabled={
-              isLoading ||
-              employees.length === 0
-            }
-          >
-            入力内容を確認する
-          </Button>
-        </div>
-      </form>
-    </div>
+              <Button
+                type="submit"
+                disabled={
+                  isLoading ||
+                  employees.length === 0
+                }
+              >
+                入力内容を確認する
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </main>
   );
 };

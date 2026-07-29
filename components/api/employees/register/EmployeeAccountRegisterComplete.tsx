@@ -1,9 +1,24 @@
 "use client";
 
+import {
+  CheckCircle2,
+} from "lucide-react";
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 /**
- * 完了画面のprops
+ * 完了画面のProps
  */
 type Props = {
   /** 登録した社員名 */
@@ -29,42 +44,70 @@ export default function EmployeeAccountRegisterComplete({
   onClose,
 }: Props) {
   return (
-    <main className="min-h-screen bg-white text-slate-800">
-      <section className="mx-auto flex min-h-[325px] max-w-5xl flex-col items-center px-6 py-10">
-        <h1 className="mb-10 text-3xl font-bold">
-          アカウント登録完了
-        </h1>
+    <main className="mx-auto w-full max-w-3xl p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">
+            アカウント登録完了
+          </CardTitle>
+        </CardHeader>
 
-        <p className="mb-8 text-xl">
-          <span className="font-semibold">
+        <CardContent className="space-y-6">
+          <Alert>
+            <CheckCircle2 />
+
+            <AlertTitle>
+              アカウントを登録しました
+            </AlertTitle>
+
+            <AlertDescription>
+              担当者アカウントの登録が完了しました。
+            </AlertDescription>
+          </Alert>
+
+          <dl className="grid grid-cols-1 gap-4 rounded-md border p-4 sm:grid-cols-[160px_1fr] sm:gap-x-6">
+            <dt className="font-semibold">
+              社員名
+            </dt>
+
+            <dd className="break-words">
+              {employeeName}
+            </dd>
+
+            <dt className="font-semibold">
+              アカウント名
+            </dt>
+
+            <dd className="break-words">
+              {accountName}
+            </dd>
+          </dl>
+
+          <p className="text-muted-foreground">
             {employeeName}
-          </span>
-          さんのアカウント名は
-          <span className="font-semibold">
+            さんのアカウント名は
             「{accountName}」
-          </span>
-          になりました。
-        </p>
+            になりました。
+          </p>
 
-        <div className="flex gap-3">
-          <Button
-            type="button"
-            onClick={
-              onRegisterAnother
-            }
-          >
-            続けて新規登録する
-          </Button>
+          <div className="flex justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onRegisterAnother}
+            >
+              続けて新規登録する
+            </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onClose}
-          >
-            閉じる
-          </Button>
-        </div>
-      </section>
+            <Button
+              type="button"
+              onClick={onClose}
+            >
+              ホームへ戻る
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </main>
   );
 }
