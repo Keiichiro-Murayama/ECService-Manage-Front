@@ -19,21 +19,8 @@ export class CategoryRepository implements ICategoryRepository {
    * @returns カテゴリ一覧の配列
    */
   async getAllCategories(): Promise<Category[]> {
-    const session = await getSession();
-
-    const accessToken = session?.user?.accessToken;
-
-    if (!accessToken) {
-      throw new Error(
-        "認証情報を取得できません。再度ログインしてください。",
-      );
-    }
-
     const response = await fetch(this.endpoint, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
       credentials: "include",
     });
 
