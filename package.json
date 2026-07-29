@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -46,7 +46,11 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@playwright/test": "^1.61.1",
+=======
+    "@playwright/test": "^1.62.0",
+>>>>>>> 7a53ee0 (package.jsonのスクリプトと依存関係を更新)
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
