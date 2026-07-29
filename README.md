@@ -1,4 +1,4 @@
-## リリース Ver.2.0
+## リリース Ver.3.0
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
