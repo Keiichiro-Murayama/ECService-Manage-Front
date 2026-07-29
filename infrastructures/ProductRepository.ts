@@ -33,7 +33,6 @@ export class ProductRepository implements IProductRepository {
         categoryUuid,
       )}`
       : this.endpoint;
-
     const response = await fetch(url, {
       credentials: "include",
     });

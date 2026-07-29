@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+
     "dev": "next dev -p 3000",
+
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -46,6 +48,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+
 
     "@playwright/test": "^1.62.0",
     "@tailwindcss/postcss": "^4",

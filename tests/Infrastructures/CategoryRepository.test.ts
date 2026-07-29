@@ -1,4 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+
+
+vi.mock("next-auth/react", () => ({
+    getSession: vi.fn(),
+}));
 import { CategoryRepository } from "@/infrastructures/CategoryRepository";
 
 describe("CategoryRepository", () => {
@@ -11,7 +16,7 @@ describe("CategoryRepository", () => {
     });
 
     describe("getAllCategories", () => {
-
+       
         it("カテゴリ一覧を取得できる", async () => {
 
             const categories = [
