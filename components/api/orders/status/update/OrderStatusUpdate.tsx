@@ -450,13 +450,7 @@ export const OrderStatusUpdate = ({
 
           {updateResult !== null && (
             <dl className="grid gap-4 sm:grid-cols-[180px_1fr]">
-              <dt className="font-semibold">
-                注文UUID
-              </dt>
-
-              <dd className="break-all">
-                {updateResult.orderUuid}
-              </dd>
+              
 
               <dt className="font-semibold">
                 更新日時

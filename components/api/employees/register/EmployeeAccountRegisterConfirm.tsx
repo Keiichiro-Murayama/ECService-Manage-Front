@@ -1,72 +1,127 @@
 "use client";
 
+import {
+  LoaderCircle,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type Props = {
-    employeeName: string;
-    accountName: string;
-    password: string;
-    isLoading: boolean;
-    onBack: () => void;
-    onSubmit: () => Promise<void>;
-    onCancel: () => void;
+  /** 選択した社員名 */
+  employeeName: string;
+
+  /** 登録するアカウント名 */
+  accountName: string;
+
+  /** 登録するパスワード */
+  password: string;
+
+  /** 登録処理中かどうか */
+  isLoading: boolean;
+
+  /** 入力画面へ戻る */
+  onBack: () => void;
+
+  /** アカウントを登録する */
+  onSubmit: () => Promise<void>;
+
+  /** 登録を中止する */
+  onCancel: () => void;
 };
 
+/**
+ * 担当者アカウント登録確認画面
+ */
 export const EmployeeAccountRegisterConfirm = ({
-    employeeName,
-    accountName,
-    password,
-    isLoading,
-    onCancel,
-    onBack,
-    onSubmit,
+  employeeName,
+  accountName,
+  password,
+  isLoading,
+  onCancel,
+  onBack,
+  onSubmit,
 }: Props) => {
-    return (
-        <main className="min-h-screen bg-white text-slate-800">
-            <section className="mx-auto flex min-h-[325px] max-w-5xl flex-col items-center px-6 py-10">
-                <h1 className="mb-10 text-3xl font-bold">
-                    アカウント登録(確認)
-                </h1>
+  return (
+    <main className="mx-auto w-full max-w-3xl p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">
+            アカウント登録確認
+          </CardTitle>
+        </CardHeader>
 
-                <div className="mb-8 grid grid-cols-[140px_1fr] gap-x-6 gap-y-3 text-xl">
-                    <p className="text-right">社員名</p>
-                    <p>{employeeName}</p>
+        <CardContent>
+          <div className="space-y-6">
+            <dl className="grid grid-cols-1 gap-4 rounded-md border p-4 sm:grid-cols-[160px_1fr] sm:gap-x-6">
+              <dt className="font-semibold">
+                社員名
+              </dt>
 
-                    <p className="text-right">アカウント名</p>
-                    <p>{accountName}</p>
+              <dd className="break-words">
+                {employeeName}
+              </dd>
 
-                    <p className="text-right">パスワード</p>
-                    <p>{"*".repeat(password.length)}</p>
-                </div>
+              <dt className="font-semibold">
+                アカウント名
+              </dt>
 
-                <div className="flex items-center gap-3">
-                    <button
-                        type="button"
-                        onClick={onCancel}
-                        disabled={isLoading}
-                        className="px-2 py-2 text-xl font-bold text-emerald-600 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        キャンセル
-                    </button>
+              <dd className="break-words">
+                {accountName}
+              </dd>
 
-                    <button
-                        type="button"
-                        onClick={onBack}
-                        disabled={isLoading}
-                        className="rounded-md border-2 border-emerald-500 px-6 py-2 text-xl font-bold text-emerald-600 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        戻る
-                    </button>
+              <dt className="font-semibold">
+                パスワード
+              </dt>
 
-                    <button
-                        type="button"
-                        onClick={onSubmit}
-                        disabled={isLoading}
-                        className="rounded-md border-2 border-emerald-500 px-6 py-2 text-xl font-bold text-emerald-600 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                        {isLoading ? "登録中..." : "登録"}
-                    </button>
-                </div>
-            </section>
-        </main>
-    );
+              <dd>
+                {"*".repeat(password.length)}
+              </dd>
+            </dl>
+
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={onCancel}
+                disabled={isLoading}
+              >
+                キャンセル
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onBack}
+                disabled={isLoading}
+              >
+                戻る
+              </Button>
+
+              <Button
+                type="button"
+                onClick={() => {
+                  void onSubmit();
+                }}
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <LoaderCircle className="animate-spin" />
+                )}
+
+                {isLoading
+                  ? "登録中..."
+                  : "登録"}
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </main>
+  );
 };

@@ -1,146 +1,177 @@
 "use client";
 
-import { useRegisterCategory } from "@/hooks/useRegisterCategory";
+import type {
+  FormEvent,
+} from "react";
+
+import { useRouter } from "next/navigation";
+
+import {
+  CircleAlert,
+} from "lucide-react";
+
+import {
+  Alert,
+  AlertDescription,
+} from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CategoryRegisterConfirm } from "./CategoryRegisterConfirm";
+
+import { useRegisterCategory } from "@/hooks/useRegisterCategory";
+
 import { CategoryRegisterComplete } from "./CategoryRegisterComplete";
-import { CircleAlert } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { CategoryRegisterConfirm } from "./CategoryRegisterConfirm";
 
 /**
  * 商品カテゴリ登録画面
  */
 export const CategoryRegister = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-const {
+  const {
     formData,
     errors,
     isLoading,
     step,
+
     handleChange,
     handleConfirm,
     handleBack,
     handleSubmit,
     resetForm,
-} = useRegisterCategory();
+  } = useRegisterCategory();
 
-    /**
-     * フォーム送信
-     */
-    const onSubmit = (
-        e: React.FormEvent<HTMLFormElement>
-    ): void => {
-        e.preventDefault();
-        handleConfirm();
-    };
+  /**
+   * 入力フォームを送信する
+   */
+  const onSubmit = (
+    event: FormEvent<HTMLFormElement>,
+  ): void => {
+    event.preventDefault();
+    handleConfirm();
+  };
 
-if (step === "complete") {
+  /**
+   * 登録完了画面
+   */
+  if (step === "complete") {
     return (
-        <CategoryRegisterComplete
-            categoryName={formData.name}
-            onClose={() => router.push("/")}
-            onRegisterMore={resetForm}
-        />
+      <CategoryRegisterComplete
+        categoryName={formData.name}
+        onClose={() =>
+          router.push("/")
+        }
+        onRegisterMore={resetForm}
+      />
     );
-}
+  }
 
-    /**
-     * 確認画面
-     */
-    if (step === "confirm") {
-        return (
-            <CategoryRegisterConfirm
-                categoryName={formData.name}
-                isLoading={isLoading}
-                onBack={handleBack}
-                onSubmit={handleSubmit}
-                onCancel={() => router.push("/")}
-            />
-        );
-    }
-
-
-
-    /**
-     * 入力画面
-     */
+  /**
+   * 登録確認画面
+   */
+  if (step === "confirm") {
     return (
-        <div className="container mx-auto max-w-lg py-10">
+      <CategoryRegisterConfirm
+        categoryName={formData.name}
+        isLoading={isLoading}
+        onBack={handleBack}
+        onSubmit={handleSubmit}
+        onCancel={() =>
+          router.push("/")
+        }
+      />
+    );
+  }
 
-            <h1 className="mb-6 text-2xl font-bold">
-                商品カテゴリ新規登録
-            </h1>
+  /**
+   * 登録入力画面
+   */
+  return (
+    <main className="mx-auto w-full max-w-3xl p-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">
+            商品カテゴリ新規登録
+          </CardTitle>
+        </CardHeader>
 
-            <form
-                onSubmit={onSubmit}
-                className="space-y-6"
+        <CardContent>
+          {errors.submit && (
+            <Alert
+              variant="destructive"
+              className="mb-6"
             >
+              <CircleAlert />
 
-                {/* カテゴリ名 */}
-                <div className="space-y-2">
+              <AlertDescription>
+                {errors.submit}
+              </AlertDescription>
+            </Alert>
+          )}
 
-                    <Label htmlFor="name">
-                        カテゴリ名
-                    </Label>
+          <form
+            onSubmit={onSubmit}
+            className="space-y-6"
+            noValidate
+          >
+            <div className="space-y-2">
+              <Label htmlFor="name">
+                カテゴリ名
+              </Label>
 
-                    <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="カテゴリ名を入力してください"
-                        className={
-                            errors.name
-                                ? "border-red-500"
-                                : ""
-                        }
-                    />
+              <Input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="カテゴリ名を入力してください"
+                disabled={isLoading}
+                aria-invalid={
+                  errors.name !== undefined
+                }
+              />
 
-                    {errors.name && (
-                        <div className="flex items-center gap-1 text-sm text-red-500">
-                            <CircleAlert className="h-4 w-4" />
-                            <span>{errors.name}</span>
-                        </div>
-                    )}
+              {errors.name && (
+                <div className="flex items-center gap-1 text-sm text-destructive">
+                  <CircleAlert className="h-4 w-4" />
 
+                  <span>
+                    {errors.name}
+                  </span>
                 </div>
-
-                {/* 登録APIエラー */}
-                {errors.submit && (
-                    <div className="flex items-center gap-1 text-sm text-red-500">
-                        <CircleAlert className="h-4 w-4" />
-                        <span>{errors.submit}</span>
-                    </div>
-                )}
-
-            </form>
-
-            {/* ボタン */}
-            <div className="flex justify-end gap-3 pt-4">
-
-                <Button
-                    type="button"
-                    className="w-48"
-                    onClick={handleConfirm}
-                >
-                    入力内容を確認する
-                </Button>
-
-                <Button
-                    type="button"
-                    variant="outline"
-                    disabled={isLoading}
-                    onClick={() => router.push("/")}
-                >
-                    キャンセル
-                </Button>
-
+              )}
             </div>
 
-        </div>
-    );
+            <div className="flex justify-end gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                disabled={isLoading}
+                onClick={() =>
+                  router.push("/")
+                }
+              >
+                キャンセル
+              </Button>
+
+              <Button
+                type="submit"
+                disabled={isLoading}
+              >
+                入力内容を確認する
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </main>
+  );
 };
