@@ -3,6 +3,7 @@ import type { ICategoryRepository } from "../interfaces/ICategoryRepository";
 //小倉追加
 import type { GetCategoriesResponse } from "@/models/GetCategoriesResponse";
 import { injectable } from "inversify";
+import { getSession } from "next-auth/react";
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {
@@ -18,7 +19,21 @@ export class CategoryRepository implements ICategoryRepository {
    * @returns カテゴリ一覧の配列
    */
   async getAllCategories(): Promise<Category[]> {
+    const session = await getSession();
+
+    const accessToken = session?.user?.accessToken;
+
+    if (!accessToken) {
+      throw new Error(
+        "認証情報を取得できません。再度ログインしてください。",
+      );
+    }
+
     const response = await fetch(this.endpoint, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       credentials: "include",
     });
 
@@ -59,22 +74,22 @@ export class CategoryRepository implements ICategoryRepository {
       credentials: "include",
     });
 
-if (!response.ok) {
-    switch (response.status) {
+    if (!response.ok) {
+      switch (response.status) {
         case 400:
-            throw new Error("カテゴリの形式が正しくありません。");
+          throw new Error("カテゴリの形式が正しくありません。");
 
         case 401:
-            throw new Error("認証が切れています。");
+          throw new Error("認証が切れています。");
 
         case 409:
-            throw new Error("このカテゴリ名は既に登録されています。");
+          throw new Error("このカテゴリ名は既に登録されています。");
 
         default:
-            throw new Error(
-                `カテゴリの登録に失敗しました。(status: ${response.status})`
-            );
+          throw new Error(
+            `カテゴリの登録に失敗しました。(status: ${response.status})`
+          );
+      }
     }
-}
   }
 }
